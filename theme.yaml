@@ -20,4 +20,4 @@ spec:
   settingName: "theme-PandaPRO-setting"
   configMapName: "theme-PandaPRO-configMap"
   version: "1.0"
-  require: "*"
+  require: ">=2.0.0"
