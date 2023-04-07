@@ -1,17 +1,31 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{layout :: html(head = null,content = ~{::content})}"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{modules/layout :: html(title = '标签 - ' + ${site.title},htmlType = index,header = null,leftSidebar = true,content = ~{::content}, head = null, footer = null)}"
 >
   <th:block th:fragment="content">
-    <h1>标签</h1>
-    <ul>
-      <li th:each="tag : ${tags}">
-        <a
-          th:href="@{${tag.status.permalink}}"
-          th:text="${tag.spec.displayName}"
-        ></a>
-      </li>
-    </ul>
+    <main class="site-main" style="transform: none;">
+      <div class="container" style="transform: none;">
+        <div class="row gx-xl-3" style="transform: none;">
+          <div class="col-xl-8">
+            <div class="card card-md">
+              <div class="card-header">
+                <h1 class="text-dark">所有标签</h1>
+              </div>
+              <div class="card-body">
+                <ul class="tags-list">
+                  <li th:each="tag : ${tags}">
+                    <a th:href="${tag.status.permalink}" th:title="${tag.spec.displayName}" class="btn btn-outline-light">
+                      #[[${tag.spec.displayName}]]
+                      <span>[[${tag.status.postCount}]]</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <th:block th:replace="~{modules/right-widget :: right-widget}" />
+        </div>
+      </div>
+    </main>
   </th:block>
 </html>

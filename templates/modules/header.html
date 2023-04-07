@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="header">
+
+  <header class="site-navbar navbar navbar-expand-xl">
+    <div class="container">
+      <a th:href="${site.url}" class="navbar-brand">
+        <img th:src="${theme.config.basic.logo}" alt="Logo" class="light-logo">
+        <img th:src="${theme.config.basic.logo_dark}" alt="Logo" class="dark-logo">
+      </a>
+      <div class="collapse navbar-collapse" id="navbarToggler">
+        <th:block th:if="${#lists.isEmpty(theme.config.header.menuItem)}">
+          <th:block th:with="menu = ${menuFinder.getPrimary()}">
+        <ul class="navbar-site navbar-nav me-auto ms-lg-5"
+            th:with="menuItems = ${menu.menuItems}">
+          <li class="menu-item"
+              th:each="menuItem : ${menuItems}">
+            <a th:href="@{${menuItem.status.href}}">[[${menuItem.status.displayName}]]</a>
+
+          </li>
+
+        </ul>
+          </th:block>
+        </th:block>
+        <th:block th:if="${not #lists.isEmpty(theme.config.header.menuItem)}">
+          <th:block th:with="menu = ${menuFinder.getByName(theme.config.header.menuItem)}">
+            <ul class="navbar-site navbar-nav me-auto ms-lg-5"
+                th:with="menuItems = ${menu.menuItems}">
+              <li class="menu-item"
+                  th:each="menuItem : ${menuItems}">
+                <a th:href="@{${menuItem.status.href}}">[[${menuItem.status.displayName}]]</a>
+
+              </li>
+
+            </ul>
+          </th:block>
+        </th:block>
+      </div>
+      <div class="d-flex flex-wrap flex-shrink-0 align-items-center ms-md-4">
+        <a href="javascript:;" class="switch-dark-mode btn btn-link btn-rounded btn-sm btn-icon"><span><i class="iconfont icon-light"></i></span></a>
+        <a href="javascript:SearchWidget.open()" class="btn btn-link btn-rounded btn-sm btn-icon ms-2 ms-md-3"><span><i class="iconfont icon-chazhao"></i></span></a>
+        <a href="javascript:" class="aside-toggle d-xl-none btn btn-link btn-rounded btn-sm btn-icon ms-2 ms-md-3">
+          <span><i class="iconfont icon-caidanzhongxin"></i></span></a>
+
+        <a href="/console" class="d-none d-xl-block btn btn-primary btn-rounded btn-sm btn-icon ms-2 ms-md-3">
+          <span><i class="iconfont icon-wode1"></i></span></a>
+
+      </div>
+    </div>
+  </header>
+
+</th:block>
+</html>

@@ -1,18 +1,143 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{layout :: html(head = null,content = ~{::content})}"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{modules/layout :: html(title = ${site.title},htmlType = index,header = null,leftSidebar = true,content = ~{::content}, head = null, footer = null)}"
 >
   <th:block th:fragment="content">
-    <ul>
-      <li th:each="post : ${posts.items}">
-        <a
-          th:href="@{${post.status.permalink}}"
-          th:text="${post.spec.title}"
-        ></a>
-      </li>
-    </ul>
-    <a th:if="${posts.hasPrevious()}" th:href="@{${posts.prevUrl}}">上一页</a>
-    <a th:if="${posts.hasNext()}" th:href="@{${posts.nextUrl}}">下一页</a>
+    <main class="site-main" style="transform: none;">
+      <div class="container" style="transform: none;">
+        <div class="row gx-xl-3" style="transform: none;">
+          <div class="col-xl-8">
+<!--            幻灯片-->
+            <div class="banner-section banner-nextprev mb-2 mb-md-2">
+              <div class="swiper swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden">
+                <div class="swiper-wrapper" style="transition-duration: 0ms; transform: translate3d(-932px, 0px, 0px);" id="swiper-wrapper-f54bf3257fed3bbb" aria-live="polite">
+                  <div class="swiper-slide rounded-2 swiper-slide-duplicate swiper-slide-prev swiper-slide-duplicate-next" data-swiper-slide-index="1" style="width: 902px; margin-right: 30px;" role="group" aria-label="2 / 2">
+                    <div class="media media-3x1">
+                      <a target="_blank" class="media-content" href="#" style="background-image: url(https://pandapro.halo.nicetheme.xyz/upload/img00023.jpg)"></a>
+                    </div>
+                  </div>
+                  <th:block th:if="${theme.config.index.banner != null}">
+                    <th:block th:each="banner : ${theme.config.index.banner}">
+                  <div class="swiper-slide rounded-2 swiper-slide-active" data-swiper-slide-index="0" style="width: 902px; margin-right: 30px;" role="group" aria-label="1 / 2">
+                    <div class="media media-3x1">
+                      <a target="_blank" class="media-content" th:href="${banner.goUrl}" th:style="'background-image: url(' + ${banner.imgUrl} +')'"></a>
+                    </div>
+                  </div>
+                    </th:block>
+                  </th:block>
+                </div>
+
+                <div class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal"><span class="swiper-pagination-bullet swiper-pagination-bullet-active" aria-current="true"></span><span class="swiper-pagination-bullet"></span></div>
+                <div class="swiper-button-next" tabindex="0" role="button" aria-label="Next slide" aria-controls="swiper-wrapper-f54bf3257fed3bbb"></div>
+                <div class="swiper-button-prev" tabindex="0" role="button" aria-label="Previous slide" aria-controls="swiper-wrapper-f54bf3257fed3bbb"></div>
+                <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+            </div>
+
+
+
+            <div class="index-cat-column mb-3">
+              <div class="row g-2 g-lg-2">
+                <th:block th:if="${theme.config.index.card != null}">
+                  <th:block th:each="card : ${theme.config.index.card}">
+
+                <div class="col-4 col-md-2">
+
+                  <div class="item">
+                    <div class="media media-2x1">
+                      <a class="media-content" th:href="${card.goUrl}" th:style="'background-image: url(' + ${card.imgUrl} +')'"></a>
+                      <div class="media-overlay bg-dark-overlay"></div>
+                    </div>
+                    <a href="#" class="item-content">
+                      <h3 class="text-sm">
+                        <div class="h-2x">[[${card.cardName}]]</div>
+                      </h3>
+                    </a>
+                  </div>
+
+                </div>
+                  </th:block>
+                </th:block>
+              </div>
+            </div>
+
+
+
+            <th:block th:if="${theme.config.index.menuItem != null}">
+            <div class="posts-tabmenu card">
+
+              <ul>
+                <li class="item active">
+                  <a href="index.html" class="btn btn-light btn-sm btn-rounded">最新</a>
+                </li>
+                <th:block th:with="menu = ${menuFinder.getByName(theme.config.index.menuItem)}">
+                  <th:block th:with="menuItems = ${menu.menuItems}">
+                <li class="item"
+                    th:each="menuItem : ${menuItems}">
+                  <a th:href="@{${menuItem.status.href}}" class="btn btn-light btn-sm btn-rounded">[[${menuItem.status.displayName}]]</a>
+                </li>
+                  </th:block>
+                </th:block>
+              </ul>
+
+            </div>
+            </th:block>
+
+
+            <div id="post-list" class="list-grid list-grid-padding">
+
+              <div class="list-item block" th:each="post : ${posts.items}">
+                <th:block th:if="${not #lists.isEmpty(post.spec.cover)}">
+                <div class="media media-3x2 col-5 col-md-4 col-lg-3">
+                  <a th:href="${post.status.permalink}" th:alt="${post.spec.title}" class="media-content" th:style="'background-image: url('+ ${post.spec.cover}+' )'"></a>
+              <th:block th:if="${not #lists.isEmpty(post.categories)}"
+                        th:with="category = ${post.categories[0]}">
+                  <a th:href="@{${category.status.permalink}}" th:title="${category.spec.displayName}" class="list-catname">[[${category.spec.displayName}]]</a>
+              </th:block>
+                </div>
+                </th:block>
+                <div class="list-content">
+                  <div class="list-body">
+                    <h2 class="list-title text-md h-2x">
+                      <a th:href="${post.status.permalink}" th:title="${post.spec.title}" class="">
+                        <th:block th:if="${post.spec.pinned}">
+                        <span class="badge-top">置顶</span>
+                        </th:block>
+                        <span>[[${post.spec.title}]]</span>
+                      </a>
+                    </h2>
+                    <div class="list-desc text-secondary mt-2 mt-lg-3 d-none d-md-block">
+                      <div class="h-2x">[[${post.status.excerpt}]]</div>
+                    </div>
+                  </div>
+                  <div class="list-footer d-flex align-items-center text-xs text-muted mt-2 mt-md-3" th:x-data="'{ postId: '+'\'' + ${post.metadata.name} + '\''+' , likesCount: '+${post.stats.upvote}+'}'">
+                    <th:block th:with="contributor = ${contributorFinder.getContributor(post.status.contributors[0])}"
+                            >
+
+                    <a href="#" th:title="${contributor.displayName}" class="d-flex align-items-center">
+                      <div class="flex-avatar w-24 me-1">
+                        <img th:src="${contributor.avatar}" th:title="${contributor.displayName}" th:alt="${contributor.displayName}">
+                      </div>
+                      <div class="h-1x">[[${contributor.displayName}]]</div>
+                    </a>
+                    </th:block>
+
+                    <div class="flex-fill"></div>
+                    <div class="flex-shrink-0" x-data="postMetaData">
+                                        <span class="d-none d-md-inline-block"><i class="text-md icon-sm iconfont icon-dakaiyanjing"></i>
+                    <span class="font-number">[[${post.stats.visit}]]</span></span>
+                      <span class="d-none d-md-inline-block ms-md-4 ms-xl-5"><i class="text-md icon-sm iconfont icon-yijian"></i>
+                    <span class="font-number">[[${post.stats.comment}]]</span></span>
+                      <a href="javascript:;" @click="like" :class="{ active: liked }" class="post-like ms-md-3 ms-xl-5"><i class="text-md icon-sm iconfont icon-zan"></i>
+                        <span class="font-number" x-text="likesCount"></span></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <th:block th:replace="~{modules/right-widget :: right-widget}" />
+        </div>
+      </div>
+    </main>
   </th:block>
 </html>

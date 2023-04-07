@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="right-widget">
+  <aside class="sidebar col-xl-4 d-none d-xl-block" style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1px;">
+    <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none;">
+    <!--  首页-->
+    <th:block th:if="${htmlType == 'index'}">
+      <th:block th:each="widgets : ${#strings.listSplit(theme.config.other.indexWidgets, ',')}">
+        <th:block th:replace="modules/widgets/asideWidgets :: ${widgets}" />
+      </th:block>
+    </th:block>
+    <!--  文章页-->
+    <th:block th:if="${htmlType == 'post'}">
+      <th:block th:each="widgets : ${#strings.listSplit(theme.config.other.postWidgets, ',')}">
+        <th:block th:replace="modules/widgets/asideWidgets :: ${widgets}" />
+      </th:block>
+    </th:block>
+      <div class="resize-sensor" style="position: absolute; inset: 0px; overflow: hidden; z-index: -1; visibility: hidden;">
+        <div class="resize-sensor-expand" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;">
+          <div style="position: absolute; left: 0px; top: 0px; transition: all; width: 404px; height: 2294px;"></div>
+        </div>
+        <div class="resize-sensor-shrink" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;">
+          <div style="position: absolute; left: 0; top: 0; transition: 0s; width: 200%; height: 200%"></div>
+        </div>
+      </div>
+    </div>
+  </aside>
+</th:block>
+
+</html>
+

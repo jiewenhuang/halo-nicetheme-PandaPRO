@@ -1,10 +1,187 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{layout :: html(head = null,content = ~{::content})}"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:util="urn:thymeleaf-util"
+      th:replace="~{modules/layout :: html(title = ${post.spec.title} + ' - ' + ${site.title},htmlType = post,header = null,leftSidebar = true, content = ~{::content}, head = null, footer = null)}"
 >
   <th:block th:fragment="content">
-    <h1 th:text="${post.spec.title}"></h1>
-    <article th:utext="${post.content.content}"></article>
+    <main class="site-main" x-data="{ showSharePopup: false }" style="transform: none;">
+      <div class="container" style="transform: none;">
+        <div class="row gx-xl-3 gx-lg-4" style="transform: none;">
+          <div class="col-xl-8">
+            <div class="post block" th:x-data="'{ postId: '+'\'' + ${post.metadata.name} + '\''+' , likesCount: '+${post.stats.upvote}+'}'">
+              <h1 class="post-title text-dark mb-3 mb-md-4">[[${post.spec.title}]]</h1>
+              <div class="post-meta d-flex align-items-center" x-data="postMetaData">
+                <th:block th:with="contributor = ${contributorFinder.getContributor(post.status.contributors[0])}"
+                >
+                <a href="#" th:title="${contributor.displayName}" class="d-flex align-items-center flex-fill">
+                  <div class="flex-avatar w-32 me-2">
+                    <img th:src="${contributor.avatar ?: #theme.assets('/images/jiewen_icon.png')}" th:alt="${contributor.displayName}">
+                  </div>
+                  <div class="h-1x">[[${contributor.displayName}]]</div>
+                </a>
+                </th:block>
+                <span><i class="text-md icon-sm iconfont icon-dakaiyanjing"></i>
+                                    <span class="font-number">[[${post.stats.visit}]]</span></span>
+                <span class="ms-3 ms-md-4 ms-xl-5"><i class="text-md icon-sm iconfont icon-yijian"></i>
+                                    <span class="font-number">[[${post.stats.comment}]]</span></span>
+                <a href="javascript:;" @click="like" :class="{ active: liked }" class="post-like ms-3 ms-md-4 ms-xl-5"><i class="text-md icon-sm iconfont icon-zan"></i>
+                  <span class="font-number" x-text="likesCount"></span>
+                </a>
+              </div>
+              <div class="border-top border-light mt-3 mt-md-4 pt-3 pt-md-4"></div>
+              <th:block th:if="${post.tags}">
+              <div class="post-tags mb-3 mb-md-4">
+                <a th:each="tag : ${post.tags}"
+                   th:href="@{${tag.status.permalink}}"
+                   th:title="${tag.spec.displayName}"><i class="text-sm iconfont icon-biaoqian me-1"></i><span>[[${tag.spec.displayName}]]</span>
+                </a>
+              </div>
+              </th:block>
+              <div class="post-content toc-class"
+                   th:utext="${post.content.content}">
+
+              </div>
+              <div class="post-actions d-flex flex-wrap justify-content-center mt-4 mt-md-5" x-data="postMetaData">
+                <a href="javascript:;" class="like-taggle btn btn-light btn-lg btn-rounded btn-icon mx-2" @click="like" :class="{ active: liked }"><span><i class="iconfont icon-zan"></i></span><small class="font-number" x-text="likesCount">4</small></a>
+                <a href="javascript:;" @click="showSharePopup = true" class="share-taggle btn btn-light btn-lg btn-rounded btn-icon mx-2"><span><i class="iconfont icon-launch1"></i></span></a>
+              </div>
+              <div class="post-prevnext mt-4 mt-md-5" th:with="postCursor = ${postFinder.cursor(post.metadata.name)}">
+                <div class="row g-3">
+                  <div class="col-12 col-md-6 d-flex">
+                    <a th:if="${postCursor.hasPrevious()}"
+                       role="navigation" th:href="@{${postCursor.previous.status.permalink}}" th:title="${postCursor.previous.spec.title}" class="prevnext-prev">
+                      <div class="prevnext-title h-2x" th:text="${#strings.abbreviate(postCursor.previous.spec.title,20)}"></div>
+                      <i class="prevnext-icon iconfont icon-shaixuanzuobian"></i>
+                    </a>
+                  </div>
+                  <div class="col-12 col-md-6 d-flex">
+                    <a th:if="${postCursor.hasNext()}"
+                       role="navigation" th:href="@{${postCursor.next.status.permalink}}" th:title="${postCursor.next.spec.title}" class="prevnext-next text-md-end">
+                      <div class="prevnext-title h-2x" th:text="${#strings.abbreviate(postCursor.next.spec.title,20)}"></div>
+                      <i class="prevnext-icon iconfont icon-shaixuanyoubian"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="post-related card mt-3">
+              <div class="card-header">
+                <h2 class="text-lg text-dark">
+                  <i class="fw-normal text-xl text-primary icon-md iconfont icon-xuqiu me-1"></i>推荐阅读
+                </h2>
+              </div>
+              <div class="card-body">
+
+                <div class="list-grid"
+                     th:each="recommendPosts : ${post.categories[0]}"
+                     th:with="recommendPosts = ${postFinder.listByCategory(1,3,recommendPosts.metadata.name)}">
+                  <th:block th:each="recommendPost : ${recommendPosts.items}">
+                  <div class="list-item"
+                       th:if="${post.metadata.name != recommendPost.metadata.name}">
+                    <th:block th:if="${not #lists.isEmpty(recommendPost.spec.cover)}">
+                    <div class="media media-3x2 rounded-1 col-5 col-md-4 col-lg-3">
+                      <th:block th:if="${not #lists.isEmpty(post.categories)}"
+                                th:with="category = ${recommendPost.categories[0]}">
+                      <a th:href="@{${recommendPost.status.permalink}}" th:alt="${recommendPost.spec.title}" class="media-content" th:style="'background-image: url('+ ${recommendPost.spec.cover}+' )'"></a>
+                      <a th:href="@{${category.status.permalink}}" th:title="${category.spec.displayName}" class="list-catname">[[${category.spec.displayName}]]</a>
+                      </th:block>
+                    </div>
+                    </th:block>
+
+                    <div class="list-content">
+                      <div class="list-body">
+                        <h2 class="list-title text-md">
+                          <a th:href="@{${recommendPost.status.permalink}}" th:title="${recommendPost.spec.title}">
+                            <div class="h-2x" th:text="${recommendPost.spec.title}"></div>
+                          </a>
+                        </h2>
+                        <div class="list-desc text-secondary mt-2 mt-md-3 d-none d-xl-block">
+                          <div class="h-2x" th:text="${recommendPost.status.excerpt}"></div>
+                        </div>
+                      </div>
+                      <div th:x-data="'{ postId: '+'\'' + ${recommendPost.metadata.name} + '\''+' , likesCount: '+${recommendPost.stats.upvote}+'}'" class="list-footer d-flex align-items-center text-xs text-muted mt-2 mt-xl-3">
+                        <th:block th:with="contributor = ${contributorFinder.getContributor(recommendPost.status.contributors[0])}"
+                        >
+                        <a href="#" th:title="${contributor.displayName}" class="d-flex align-items-center">
+                          <div class="flex-avatar w-24 me-1">
+                            <img th:src="${contributor.avatar}" th:title="${contributor.displayName}" th:alt="${contributor.displayName}">
+                          </div>
+                          <div class="h-1x" th:text="${contributor.displayName}"></div>
+                        </a>
+                        </th:block>
+                        <div class="flex-fill"></div>
+                        <div class="flex-shrink-0" x-data="postMetaData">
+                                                    <span class="d-none d-md-inline-block"><i class="text-md icon-sm iconfont icon-dakaiyanjing"></i>
+                                                        <span class="font-number" th:text="${recommendPost.stats.visit}"></span></span>
+                          <span class="d-none d-md-inline-block ms-md-4 ms-xl-5"><i class="text-md icon-sm iconfont icon-yijian"></i>
+                                                        <span class="font-number" th:text="${recommendPost.stats.comment}"></span></span>
+                          <a href="javascript:;" @click="like" :class="{ active: liked }" class="ms-md-4 ms-xl-5"><i class="text-md icon-sm iconfont icon-zan"></i>
+                            <span class="font-number" x-text="likesCount"></span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  </th:block>
+
+
+
+                </div>
+              </div>
+            </div>
+            <!-- 评论模块 -->
+            <div id="post-comment" class="post-comment card mt-3">
+              <div class="card-header">
+                <h2 class="text-lg text-dark">
+                  <i class="fw-normal text-xl text-primary icon-md iconfont icon-pinglun1 me-1"></i>评论
+                </h2>
+              </div>
+              <div class="card-body">
+                <halo:comment
+                        group="content.halo.run"
+                        kind="Post"
+                        th:attr="name=${post.metadata.name}"
+                        colorScheme="currentColorScheme"
+                />
+              </div>
+            </div>
+          </div>
+          <th:block th:replace="~{modules/right-widget :: right-widget}" />
+        </div>
+      </div>
+      <div class="nice-popup nice-popup-center nice-popup-md" :class="{ 'nice-popup-open': showSharePopup }">
+        <div class="nice-popup-overlay" @click="showSharePopup = false"></div>
+        <div class="nice-popup-body">
+          <div class="nice-popup-close" @click="showSharePopup = false">
+            <div class="svg-dark"></div>
+          </div>
+          <div class="nice-popup-content">
+            <div class="d-flex justify-content-around align-items-center text-center py-2 py-md-4">
+              <a href="javascript:;" class="copy-permalink share-link" :data-clipboard-text="window.location.href" data-clipboard-text="https://pandapro.halo.nicetheme.xyz/archives/a-li-yun-men-zha-dui-ji-jie-shu-ju-ku-huang-jin-shi-dai-dao-liao">
+                <div class="btn btn-light btn-icon btn-lg">
+                  <span><i class="iconfont icon-fuzhi"></i></span>
+                </div>
+                <div class="text-xs text-muted mt-1">
+                  复制链接
+                </div>
+              </a>
+              <a :href="'https://connect.qq.com/widget/shareqq/index.html?url=' + encodeURIComponent(window.location.href)  +'&amp;title=' + encodeURIComponent(document.title)" target="_blank" class="share-qq" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fpandapro.halo.nicetheme.xyz%2Farchives%2Fa-li-yun-men-zha-dui-ji-jie-shu-ju-ku-huang-jin-shi-dai-dao-liao&amp;title=%E9%98%BF%E9%87%8C%E4%BA%91%E4%BB%AC%E6%89%8E%E5%A0%86%E9%9B%86%E7%BB%93%EF%BC%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E9%BB%84%E9%87%91%E6%97%B6%E4%BB%A3%E5%88%B0%E4%BA%86%EF%BC%9F%20-%20nicetheme">
+                <div class="btn btn-light btn-icon btn-lg">
+                  <span><i class="iconfont icon-qq"></i></span>
+                </div>
+                <div class="text-xs text-muted mt-1">QQ</div>
+              </a>
+              <a :href="'//service.weibo.com/share/share.php?url=' + encodeURIComponent(window.location.href) + '&amp;type=button&amp;language=zh_cn&amp;title=' + encodeURIComponent(document.title) + '&amp;searchPic=true'" target="_blank" class="share-weibo" href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fpandapro.halo.nicetheme.xyz%2Farchives%2Fa-li-yun-men-zha-dui-ji-jie-shu-ju-ku-huang-jin-shi-dai-dao-liao&amp;type=button&amp;language=zh_cn&amp;title=%E9%98%BF%E9%87%8C%E4%BA%91%E4%BB%AC%E6%89%8E%E5%A0%86%E9%9B%86%E7%BB%93%EF%BC%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E9%BB%84%E9%87%91%E6%97%B6%E4%BB%A3%E5%88%B0%E4%BA%86%EF%BC%9F%20-%20nicetheme&amp;searchPic=true">
+                <div class="btn btn-light btn-icon btn-lg">
+                  <span><i class="iconfont icon-weibo"></i></span>
+                </div>
+                <div class="text-xs text-muted mt-1">微博</div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
   </th:block>
 </html>

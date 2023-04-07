@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{modules/layout :: html(title = ${category.spec.displayName}+ ' - ' + ${site.title},htmlType = index,header = null,leftSidebar = true,content = ~{::content}, head = null, footer = null)}"
+>
+<th:block th:fragment="content">
+  <main class="site-main" style="transform: none;">
+    <div class="container" style="transform: none;">
+      <div class="row gx-xl-3" style="transform: none;">
+        <div class="col-xl-8">
+          <div class="archive-poster mb-3 mb-md-4">
+            <div class="media media-3x1">
+              <div class="media-content" th:style="'background-image: url('+${category.spec.cover ?: #theme.assets('/images/img00038.jpg')}+')'"></div>
+            </div>
+            <div class="heading-content">
+              <h1 class="text-white text-xxl">[[${category.spec.displayName}]]</h1>
+            </div>
+          </div>
+          <div class="timeline-card mb-3">
+
+            <div class="timeline-list">
+
+              <div class="item" th:each="post : ${posts.items}">
+                <div class="item-dot"></div>
+                <div class="item-content">
+                  <div class="font-number stext-sm text-muted mb-1">[[${#dates.format(post.spec.publishTime,'yyyy.MM.dd')}]]</div>
+                  <div class="item-body block">
+                    <h2 class="text-md">
+                      <a th:href="${post.status.permalink}"
+                         th:title="${post.spec.title}"
+                         th:text="${post.spec.title}"
+                         target="_blank"></a>
+                    </h2>
+                    <div class="text-sm text-secondary mt-2">
+                      <span th:text="${post.status.excerpt}"></span>
+                      <a th:href="${post.status.permalink}" th:title="${post.spec.title}" target="_blank">[阅读更多]</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+        </div>
+
+
+        <th:block th:replace="~{modules/right-widget :: right-widget}" />
+      </div>
+    </div>
+  </main>
+</th:block>
+</html>

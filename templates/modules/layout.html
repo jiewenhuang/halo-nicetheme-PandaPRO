@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" th:fragment="html (title,header,content,head,footer,leftSidebar,htmlType)" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title th:text="${title}"></title>
+  <style>@font-face {
+    font-family: "Rough-Motion";
+    src: url([[${site.url}]]themes/theme-pandapro/assets/font/Rough-Motion.otf)
+    format("opentype");
+    font-style: normal;
+  }
+
+  .font-number {
+    font-family: "Rough-Motion", arial, sans-serif;
+  }
+  </style>
+  <script th:src="@{/assets/js/jquery.min%EF%B9%96v=1.0.0.js}"></script>
+  <link th:href="@{/assets/plugins/bootstrap/bootstrap.min%EF%B9%96v=1.0.0.css}" rel="stylesheet">
+  <link th:href="@{/assets/plugins/iconfont/iconfont%EF%B9%96v=1.0.0.css}" rel="stylesheet">
+  <link th:href="@{/assets/plugins/swiper/swiper-bundle.min%EF%B9%96v=1.0.0.css}" rel="stylesheet">
+  <link th:href="@{/assets/css/reset%EF%B9%96v=1.0.0.css}" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/assets/css/style%EF%B9%96v=1.0.0.css}">
+
+  <script th:src="@{/assets/js/color-scheme%EF%B9%96v=1.0.0.js}"></script>
+  <link rel="icon" th:href="@{${#strings.isEmpty(site.favicon) ? '/assets/images/jiewen_icon.png' : site.favicon}}">
+  <script>
+    initColorScheme("light", true)
+  </script>
+  <style id="theia-sticky-sidebar-stylesheet-TSS">.theiaStickySidebar:after {content: ""; display: table; clear: both;}</style>
+</head>
+<body style="transform: none;">
+<!--HEADER-->
+<th:block th:replace="~{modules/header :: header}" />
+<!--Main-->
+<th:block th:replace="${content}"></th:block>
+<!--Aside-->
+<th:block th:replace="~{modules/aside :: aside}" />
+<!--FOOTER-->
+<th:block th:replace="~{modules/footer :: footer}" />
+<div class="totop-progress-parent">
+  <span><i class="iconfont icon-shangmian1"></i></span>
+  <svg class="back-circle svg-inner" width="100%" height="100%" viewBox="-1 -1 102 102">
+    <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" style="transition: stroke-dashoffset 10ms linear; stroke-dasharray: 307.921234, 307.921234; stroke-dashoffset: 307.921234;"></path>
+  </svg>
+</div>
+<div class="mobile-overflow"></div>
+<script defer="" th:src="@{/assets/js/alpine.min%EF%B9%96v=1.0.0.js}"></script>
+<script th:src="@{/assets/plugins/bootstrap/bootstrap.bundle.min%EF%B9%96v=1.0.0.js}"></script>
+<script th:src="@{/assets/plugins/theia-sticky-sidebar/ResizeSensor.min%EF%B9%96v=1.0.0.js}"></script>
+<script th:src="@{/assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.min%EF%B9%96v=1.0.0.js}"></script>
+<script th:src="@{/assets/plugins/swiper/swiper-bundle.min%EF%B9%96v=1.0.0.js}"></script>
+<script th:src="@{/assets/plugins/clipboard/clipboard.min%EF%B9%96v=1.0.0.js}"></script>
+<script th:src="@{/assets/plugins/tocbot/tocbot.min%EF%B9%96v=1.0.0.js}"></script>
+<script th:src="@{/assets/js/nicetheme%EF%B9%96v=1.0.0.js}"></script>
+<div></div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="footer">
+<!-- FOOTER -->
+<footer class="site-footer py-3 py-md-4">
+    <div class="container">
+        <div class="footer-content mb-4 mb-md-3">
+            <th:block th:if="${#lists.isEmpty(theme.config.footer.menuItem)}">
+                <th:block th:with="menu = ${menuFinder.getPrimary()}">
+
+            <ul class="footer-menu"
+                th:with="menuItems = ${menu.menuItems}">
+                <li th:each="menuItem : ${menuItems}">
+                    <a target="_blank" th:href="@{${menuItem.status.href}}">[[${menuItem.status.displayName}]]</a>
+                </li>
+
+            </ul>
+                </th:block>
+            </th:block>
+            <th:block th:if="${not #lists.isEmpty(theme.config.footer.menuItem)}">
+                <th:block th:with="menu = ${menuFinder.getByName(theme.config.footer.menuItem)}">
+
+                    <ul class="footer-menu"
+                        th:with="menuItems = ${menu.menuItems}">
+                        <li th:each="menuItem : ${menuItems}">
+                            <a target="_blank" th:href="@{${menuItem.status.href}}">[[${menuItem.status.displayName}]]</a>
+                        </li>
+
+                    </ul>
+                </th:block>
+            </th:block>
+
+
+            <div class="footer-social">
+                <th:block th:each="socials : ${theme.config.other.socials}">
+
+                <a th:href="${socials.socialUrl}" class="btn btn-light btn-sm btn-rounded btn-icon"><span>
+                    <th:block th:utext="${socials.socials_select}" />
+                </span></a>
+                </th:block>
+            </div>
+
+        </div>
+        <div class="footer-copyright text-xs text-muted">
+            © 2023
+            <a href="index.html" class="hover:underline">[[${site.title}]]</a>. All Rights Reserved. Powered by
+            <a href="https://halo.run" class="hover:underline" target="_blank">Halo</a>. Developed by
+            <a href="https://www.nicetheme.cn" class="">nicetheme</a>.
+            <th:block th:if="${not #lists.isEmpty(theme.config.basic.icp)}">
+            <a href="https://beian.miit.gov.cn/" class="hover:underline" target="_blank">[[${theme.config.basic.icp}]]</a>
+            </th:block>
+        </div>
+    </div>
+    <halo:footer />
+</footer>
+</th:block>
+</html>

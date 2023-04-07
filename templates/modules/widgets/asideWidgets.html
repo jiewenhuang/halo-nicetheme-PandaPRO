@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="right-widget">
+  <aside class="sidebar col-xl-4 d-none d-xl-block" style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1px;">
+    <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none;">
+      <th:block th:fragment="random">
+        <th:block th:if="${theme.config.other.randomPost != null}">
+      <div class="widget-random-post mb-3"
+           th:with="post = ${postFinder.getByName(theme.config.other.randomPost)}">
+        <div class="media">
+          <div th:href="@{${post.status.permalink}}" th:alt="${post.spec.title}" class="media-content" th:style="'background-image: url('+${post.spec.cover}+')'"></div>
+          <div class="media-overlay bg-dark-overlay"></div>
+        </div>
+        <div class="random-post-content">
+          <div class="random-post-date">
+            <div class="d-flex align-items-center flex-fill">
+              <div class="font-number text-center lh-1">
+                <div class="text-64">[[${#dates.format(post.spec.publishTime,'dd')}]]</div>
+                <div class="text-sm">[[${#dates.format(post.spec.publishTime,'yyyy.MM')}]]</div>
+              </div>
+              <div class="flex-fill"></div>
+              <a href="archives/di-si-fan-shi-chong-ci-ipo-nan-tao-aiwan-jia-tong-bing.html" target="_blank" class="random-post-action btn btn-link btn-icon"><span><i class="iconfont icon-launch2"></i></span></a>
+            </div>
+          </div>
+          <h3 class="random-post-title h-2x">
+            <a href="archives/di-si-fan-shi-chong-ci-ipo-nan-tao-aiwan-jia-tong-bing.html" target="_blank" title="第四范式冲刺IPO，难逃AI玩家通病？">第四范式冲刺IPO，难逃AI玩家通病？</a>
+          </h3>
+        </div>
+      </div>
+        </th:block>
+      </th:block>
+      <th:block th:fragment="personal">
+      <div class="widget card mb-3">
+        <div class="widget widget-author card">
+          <div class="widget-author-cover media media-2x1">
+            <div class="media-content" th:style="'background-image: url('+ ${theme.config.personal.profileImg ?: #theme.assets('/images/img00051.jpg')}+')'">
+            </div>
+          </div>
+          <div class="widget-author-meta text-center">
+            <div class="widget-author-avatar flex-avatar w-80">
+              <img th:src="${theme.config.personal.profileAvatar ?: #theme.assets('/images/jiewen_icon.png')}" th:alt="${theme.config.personal.profileName ?: site.title}">
+            </div>
+            <h3 class="text-md text-dark">[[${theme.config.personal.profileName ?: site.title}]]</h3>
+            <th:block th:if="${not #lists.isEmpty(theme.config.personal.profileDesc)}">
+              <div class="text-sm text-muted mt-2">[[${theme.config.personal.profileDesc}]]</div>
+            </th:block>
+            <div class="row gx-0 text-center mt-4" th:with="stats = ${siteStatsFinder.getStats()}">
+              <div class="col">
+                <div class="font-number text-xl">[[${stats.post}]]</div>
+                <div class="text-xs text-muted">文章数</div>
+              </div>
+              <div class="col">
+                <div class="font-number text-xl">[[${stats.category}]]</div>
+                <div class="text-xs text-muted">分类数</div>
+              </div>
+              <div class="col">
+                <div class="font-number text-xl">[[${stats.comment}]]</div>
+                <div class="text-xs text-muted">评论数</div>
+              </div>
+              <div class="col">
+                <div class="font-number text-xl">[[${stats.visit}]]</div>
+                <div class="text-xs text-muted">访问量</div>
+              </div>
+            </div>
+            <div class="grid grid-cols-6 items-center gap-5">
+
+            </div>
+          </div>
+        </div>
+      </div>
+      </th:block>
+      <th:block th:fragment="hotPost">
+      <div class="widget card mb-3">
+        <h2 class="widget-title text-lg text-dark card-header">
+          <i class="text-xl text-primary icon-md iconfont icon-guanjunbang me-1"></i> 热门文章
+        </h2>
+        <div class="card-body">
+          <div role="list" class="widget-postlist list"
+               th:with="posts = ${postFinder.list(1,5)}">
+            <div class="list-item"
+                 th:each="post : ${posts}">
+              <div class="list-content">
+                <div class="list-body">
+                  <a th:href="@{${post.status.permalink}}" class="list-title">
+                    <div class="h-2x" th:title="${post.spec.title}">[[${post.spec.title}]]</div>
+                  </a>
+                </div>
+                <div class="list-footer font-number text-xs text-muted" th:text="${#dates.format(post.spec.publishTime,'yyyy-MM-dd')}"></div>
+              </div>
+              <div class="media media-3x2 rounded-1 col-5"
+                   th:if="${not #lists.isEmpty(post.spec.cover)}">
+                <a th:href="@{${post.status.permalink}}" th:alt="${post.spec.title}" class="media-content" th:style="'background-image: url('+ ${post.spec.cover}+')'"></a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      </th:block>
+      <th:block th:fragment="linePost">
+      <div class="widget-timeline card mb-3">
+        <h2 class="widget-title text-lg text-dark card-header">
+          <i class="text-xl text-primary icon-md iconfont icon-riqi me-1"></i>时间轴
+        </h2>
+        <div class="card-body">
+          <div class="timeline-list">
+            <th:block th:with="archives = ${postFinder.archives(1,4)}">
+              <th:block th:each="archive : ${archives.items}">
+                <th:block th:each="month : ${archive.months}">
+                  <div class="item" th:each="post : ${month.posts}">
+                    <div class="item-dot"></div>
+                    <div class="item-content">
+                      <div class="time-sm">
+                        <a th:href="${post.status.permalink}" target="_blank" th:title="${post.spec.title}">[[${post.spec.title}]]</a>
+                      </div>
+                      <div class="font-number text-xs text-muted mt-1">[[${#dates.format(post.spec.publishTime,'yyyy.MM.dd')}]]</div>
+                    </div>
+                  </div>
+                </th:block>
+              </th:block>
+            </th:block>
+          </div>
+        </div>
+      </div>
+      </th:block>
+      <th:block th:fragment="category">
+      <div class="widget card mb-3">
+        <h2 class="widget-title text-lg text-dark card-header">
+          <i class="text-xl text-primary icon-md iconfont icon-xuqiu me-1"></i>分类目录
+        </h2>
+        <div class="card-body" th:with="categories = ${categoryFinder.list(1,10)}">
+          <ul class="widget-cats">
+            <li th:each="category : ${categories.items}">
+              <a th:href="@{${category.status.permalink}}" th:title="${category.spec.displayName}" class="btn btn-outline-light btn-sm">
+                <span class="">[[${category.spec.displayName}]]</span>
+                <small>[[${category.status.postCount}]]</small>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+      </th:block>
+      <th:block th:fragment="tag">
+      <div class="widget card mb-3">
+        <h2 class="widget-title text-lg text-dark card-header d-flex justify-content-between align-items-center">
+          <div>
+            <i class="text-xl text-primary icon-md iconfont icon-biaoqian me-1"></i>标签
+          </div>
+          <a class="btn btn-link btn-xs btn-rounded btn-icon" href="tags.html">
+            <span><i class="iconfont icon-launch2"></i></span>
+          </a>
+        </h2>
+        <div class="card-body" th:with="tags = ${tagFinder.list(1,10)}">
+          <ul class="widget-tags">
+            <li th:each="tag : ${tags.items}">
+              <a th:href="@{${tag.status.permalink}}" th:title="${tag.spec.displayName}" class="btn btn-outline-light btn-sm">
+                #[[${tag.spec.displayName}]]
+                <small>[[${tag.status.postCount}]]</small>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      </th:block>
+      <th:block th:fragment="toc">
+        <div class="widget card" id="widget-toc">
+          <h2 class="widget-title text-lg text-dark card-header">
+            <i class="text-xl text-primary icon-md iconfont icon-caidanzhongxin me-1"></i>文章目录
+          </h2>
+          <div class="card-body">
+            <div class="toc">
+              <ol class="toc-list ">
+              </ol>
+            </div>
+          </div>
+        </div>
+      </th:block>
+      <div class="resize-sensor" style="position: absolute; inset: 0px; overflow: hidden; z-index: -1; visibility: hidden;">
+        <div class="resize-sensor-expand" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;">
+          <div style="position: absolute; left: 0px; top: 0px; transition: all; width: 404px; height: 2294px;"></div>
+        </div>
+        <div class="resize-sensor-shrink" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;">
+          <div style="position: absolute; left: 0; top: 0; transition: 0s; width: 200%; height: 200%"></div>
+        </div>
+      </div>
+    </div>
+  </aside>
+</th:block>
+</html>

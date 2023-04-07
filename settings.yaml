@@ -1,13 +1,136 @@
 apiVersion: v1alpha1
 kind: Setting
 metadata:
-  name: theme-starter-setting
+  name: theme-pandapro-setting
 spec:
   forms:
-    - group: style
-      label: 样式
+    - group: basic
+      label: 基础设置
       formSchema:
-        - $formkit: color
-          name: background_color
-          label: 背景颜色
-          value: "#f2f2f2"
+        - $formkit: attachment
+          name: logo
+          label: 普通模式logo
+          value: ""
+        - $formkit: attachment
+          name: logo_dark
+          label: 深色模式logo
+          value: ""
+        - $formkit: text
+          name: icp
+          label: 备案号
+          value: ""
+    - group: header
+      label: 顶部
+      formSchema:
+        - $formkit: menuRadio
+          name: menuItem
+          id: menuItem
+          key: menuItem
+          label: 导航栏菜单
+          value: ""
+    - group: index
+      label: 首页
+      formSchema:
+        - $formkit: repeater
+          name: banner
+          label: 幻灯片
+          value: [ ]
+          children:
+            - $formkit: attachment
+              name: imgUrl
+              label: 图片
+              value: ""
+            - $formkit: text
+              name: goUrl
+              label: 跳转链接
+              value: ""
+        - $formkit: repeater
+          name: card
+          label: 小卡片设置
+          value: [ ]
+          children:
+            - $formkit: attachment
+              name: imgUrl
+              label: 图片
+              value: ""
+            - $formkit: text
+              name: goUrl
+              label: 跳转链接
+              value: ""
+            - $formkit: text
+              name: cardName
+              label: 名称
+              value: ""
+        - $formkit: menuRadio
+          name: menuItem
+          label: 文章顶部菜单
+          value: ""
+    - group: footer
+      label: 底部
+      formSchema:
+        - $formkit: menuRadio
+          name: menuItem
+          label: 导航栏
+          value: ""
+    - group: personal
+      label: 个人信息
+      formSchema:
+        - $formkit: text
+          name: profileName
+          label: 名称，默认站点名
+          value: ""
+        - $formkit: text
+          name: profileDesc
+          label: 描述信息
+          value: "再美的梦也有苏醒的一天"
+        - $formkit: attachment
+          name: profileAvatar
+          label: 头像
+          value: ""
+        - $formkit: attachment
+          name: profileImg
+          label: 背景图
+          value: ""
+    - group: other
+      label: 其他
+      formSchema:
+        - $formkit: postSelect
+          name: randomPost
+          label: 推荐文章
+          value: ""
+        - $formkit: textarea
+          name: indexWidgets
+          label: 首页右侧小组件
+          value: "random,personal,hotPost,linePost,category,tag"
+        - $formkit: textarea
+          name: postWidgets
+          label: 文章右侧小组件
+          value: "random,personal,hotPost,linePost,category,tag,toc"
+        - $formkit: repeater
+          name: socials
+          id: socials
+          key: socials
+          label: 社交信息
+          value: [ ]
+          children:
+              - $formkit: select
+                name: socials_select
+                label: 平台
+                options:
+                  - label: 微博
+                    value: <i class="iconfont icon-weibo"></i>
+                  - label: Email
+                    value: <i class="iconfont icon-xinxi"></i>
+                  - label: Github
+                    value: <i class="iconfont icon-github"></i>
+                  - label: Bilibili
+                    value: <i class="iconfont icon-bilibili"></i>
+                  - label: Youtube
+                    value: <i class="iconfont icon-youtube"></i>
+                  - label: Twitter
+                    value: <i class="iconfont icon-twitter"></i>
+              - $formkit: text
+                name: socialUrl
+                label: 链接
+
+

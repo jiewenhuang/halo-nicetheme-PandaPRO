@@ -1,19 +1,77 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{layout :: html(head = null,content = ~{::content})}"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{modules/layout :: html(title = ${category.spec.displayName}+ ' - ' + ${site.title},htmlType = index,header = null,leftSidebar = true,content = ~{::content}, head = null, footer = null)}"
 >
   <th:block th:fragment="content">
-    <h1 th:text="${category.spec.displayName}"></h1>
-    <ul>
-      <li th:each="post : ${posts.items}">
-        <a
-          th:href="@{${post.status.permalink}}"
-          th:text="${post.spec.title}"
-        ></a>
-      </li>
-    </ul>
-    <a th:if="${posts.hasPrevious()}" th:href="@{${posts.prevUrl}}">上一页</a>
-    <a th:if="${posts.hasNext()}" th:href="@{${posts.nextUrl}}">下一页</a>
+    <main class="site-main" style="transform: none;">
+      <div class="container" style="transform: none;">
+        <div class="row gx-xl-3" style="transform: none;">
+          <div class="col-xl-8">
+            <div class="archive-poster mb-3">
+              <div class="media media-3x1">
+                <div class="media-content" th:style="'background-image: url('+${category.spec.cover ?: #theme.assets('/images/img00038.jpg')}+')'"></div>
+              </div>
+              <div class="heading-content">
+                <h1 class="text-white text-xxl">[[${category.spec.displayName}]]</h1>
+              </div>
+            </div>
+
+            <div id="post-list" class="list-grid list-grid-padding">
+                <div class="list-item block" th:each="post : ${posts.items}">
+                  <th:block th:if="${not #lists.isEmpty(post.spec.cover)}">
+                    <div class="media media-3x2 col-5 col-md-4 col-lg-3">
+                      <a th:href="${post.status.permalink}" th:alt="${post.spec.title}" class="media-content" th:style="'background-image: url('+ ${post.spec.cover}+' )'"></a>
+                      <th:block th:if="${not #lists.isEmpty(post.categories)}"
+                                th:with="category = ${post.categories[0]}">
+                        <a th:href="@{${category.status.permalink}}" th:title="${category.spec.displayName}" class="list-catname">[[${category.spec.displayName}]]</a>
+                      </th:block>
+                    </div>
+                  </th:block>
+                  <div class="list-content">
+                    <div class="list-body">
+                      <h2 class="list-title text-md h-2x">
+                        <a th:href="${post.status.permalink}" th:title="${post.spec.title}" class="">
+                          <th:block th:if="${post.spec.pinned}">
+                            <span class="badge-top">置顶</span>
+                          </th:block>
+                          <span>[[${post.spec.title}]]</span>
+                        </a>
+                      </h2>
+                      <div class="list-desc text-secondary mt-2 mt-lg-3 d-none d-md-block">
+                        <div class="h-2x">[[${post.status.excerpt}]]</div>
+                      </div>
+                    </div>
+                    <div class="list-footer d-flex align-items-center text-xs text-muted mt-2 mt-md-3" th:x-data="'{ postId: '+'\'' + ${post.metadata.name} + '\''+' , likesCount: '+${post.stats.upvote}+'}'">
+                      <th:block th:with="contributor = ${contributorFinder.getContributor(post.status.contributors[0])}"
+                      >
+
+                        <a href="#" th:title="${contributor.displayName}" class="d-flex align-items-center">
+                          <div class="flex-avatar w-24 me-1">
+                            <img th:src="${contributor.avatar}" th:title="${contributor.displayName}" th:alt="${contributor.displayName}">
+                          </div>
+                          <div class="h-1x">[[${contributor.displayName}]]</div>
+                        </a>
+                      </th:block>
+
+                      <div class="flex-fill"></div>
+                      <div class="flex-shrink-0" x-data="postMetaData">
+                                        <span class="d-none d-md-inline-block"><i class="text-md icon-sm iconfont icon-dakaiyanjing"></i>
+                    <span class="font-number">[[${post.stats.visit}]]</span></span>
+                        <span class="d-none d-md-inline-block ms-md-4 ms-xl-5"><i class="text-md icon-sm iconfont icon-yijian"></i>
+                    <span class="font-number">[[${post.stats.comment}]]</span></span>
+                        <a href="javascript:;" @click="like" :class="{ active: liked }" class="post-like ms-md-3 ms-xl-5"><i class="text-md icon-sm iconfont icon-zan"></i>
+                          <span class="font-number" x-text="likesCount"></span></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+            </div>
+
+          </div>
+          <th:block th:replace="~{modules/right-widget :: right-widget}" />
+        </div>
+      </div>
+    </main>
   </th:block>
 </html>
