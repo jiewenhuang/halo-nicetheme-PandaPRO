@@ -1,5 +1,4 @@
-# Theme Starter
+# Theme nicetheme-PandaPRO
 
-Halo 2.0 的基础主题开发模板，包含了主题的基本目录结构。
-
-主题开发文档可查阅：<https://docs.halo.run/2.0.0-SNAPSHOT/developer-guide/theme/prepare>
+### 因为舍不得99块钱花了点时间抄的[niceTheme](https://www.nicetheme.cn/halo/pandapro)  
+### 以后不一定更新，所以喜欢的还是支持正版，便宜好用包更新
