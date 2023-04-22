@@ -19,11 +19,11 @@
                 <div class="text-sm">[[${#dates.format(post.spec.publishTime,'yyyy.MM')}]]</div>
               </div>
               <div class="flex-fill"></div>
-              <a href="archives/di-si-fan-shi-chong-ci-ipo-nan-tao-aiwan-jia-tong-bing.html" target="_blank" class="random-post-action btn btn-link btn-icon"><span><i class="iconfont icon-launch2"></i></span></a>
+              <a th:href="@{${post.status.permalink}}" target="_blank" class="random-post-action btn btn-link btn-icon"><span><i class="iconfont icon-launch2"></i></span></a>
             </div>
           </div>
           <h3 class="random-post-title h-2x">
-            <a href="archives/di-si-fan-shi-chong-ci-ipo-nan-tao-aiwan-jia-tong-bing.html" target="_blank" title="第四范式冲刺IPO，难逃AI玩家通病？">第四范式冲刺IPO，难逃AI玩家通病？</a>
+            <a th:href="@{${post.status.permalink}}" target="_blank" title="第四范式冲刺IPO，难逃AI玩家通病？">第四范式冲刺IPO，难逃AI玩家通病？</a>
           </h3>
         </div>
       </div>
@@ -162,6 +162,105 @@
           </ul>
         </div>
       </div>
+      </th:block>
+      <th:block th:fragment="socialcounter">
+        <div class="widget-socialcounter card mb-3">
+          <div class="card-body">
+            <ul class="font-number">
+
+              <li>
+                <a href="javascript:;" data-img="https://pandapro.halo.nicetheme.xyz/upload/nicetheme%20%E5%BE%AE%E4%BF%A1%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg" class="weixin wechat-popup">
+                  <div class="item-icon btn btn-link btn-icon btn-sm">
+                    <span><i class="iconfont icon-weixin"></i></span>
+                  </div>
+                  <div class="item-text">WeChat</div>
+                  <div class="item-link btn btn-link btn-icon btn-sm">
+                    <span><i class="iconfont icon-shaixuanyoubian"></i></span>
+                  </div>
+                </a>
+              </li>
+
+
+              <li>
+                <a href="https://www.nicetheme.cn/" class="weibo">
+                  <div class="item-icon btn btn-link btn-icon btn-sm">
+                    <span><i class="iconfont icon-weibo"></i></span>
+                  </div>
+                  <div class="item-text">WeiBo</div>
+                  <div class="item-link btn btn-link btn-icon btn-sm">
+                    <span><i class="iconfont icon-shaixuanyoubian"></i></span>
+                  </div>
+                </a>
+              </li>
+
+
+              <li>
+                <a href="mailto:https://www.nicetheme.cn/" class="mail">
+                  <div class="item-icon btn btn-link btn-icon btn-sm">
+                    <span><i class="iconfont icon-xinxi"></i></span>
+                  </div>
+                  <div class="item-text">Mail</div>
+                  <div class="item-link btn btn-link btn-icon btn-sm">
+                    <span><i class="iconfont icon-shaixuanyoubian"></i></span>
+                  </div>
+                </a>
+              </li>
+
+
+              <li>
+                <a href="https://www.nicetheme.cn/" class="github">
+                  <div class="item-icon btn btn-link btn-icon btn-sm">
+                    <span><i class="iconfont icon-github"></i></span>
+                  </div>
+                  <div class="item-text">Github</div>
+                  <div class="item-link btn btn-link btn-icon btn-sm">
+                    <span><i class="iconfont icon-shaixuanyoubian"></i></span>
+                  </div>
+                </a>
+              </li>
+
+
+              <li>
+                <a href="https://www.nicetheme.cn/" class="bilibili">
+                  <div class="item-icon btn btn-link btn-icon btn-sm">
+                    <span><i class="iconfont icon-bilibili"></i></span>
+                  </div>
+                  <div class="item-text">Bilibili</div>
+                  <div class="item-link btn btn-link btn-icon btn-sm">
+                    <span><i class="iconfont icon-shaixuanyoubian"></i></span>
+                  </div>
+                </a>
+              </li>
+
+
+              <li>
+                <a href="https://www.nicetheme.cn/" class="youtube">
+                  <div class="item-icon btn btn-link btn-icon btn-sm">
+                    <span><i class="iconfont icon-youtube"></i></span>
+                  </div>
+                  <div class="item-text">Youtube</div>
+                  <div class="item-link btn btn-link btn-icon btn-sm">
+                    <span><i class="iconfont icon-shaixuanyoubian"></i></span>
+                  </div>
+                </a>
+              </li>
+
+
+              <li>
+                <a href="https://www.nicetheme.cn/" class="twitter">
+                  <div class="item-icon btn btn-link btn-icon btn-sm">
+                    <span><i class="iconfont icon-twitter"></i></span>
+                  </div>
+                  <div class="item-text">Twitter</div>
+                  <div class="item-link btn btn-link btn-icon btn-sm">
+                    <span><i class="iconfont icon-shaixuanyoubian"></i></span>
+                  </div>
+                </a>
+              </li>
+
+            </ul>
+          </div>
+        </div>
       </th:block>
       <th:block th:fragment="toc">
         <div class="widget card" id="widget-toc">

@@ -12,7 +12,10 @@
                 <div class="media-content" th:style="'background-image: url('+${category.spec.cover ?: #theme.assets('/images/img00038.jpg')}+')'"></div>
               </div>
               <div class="heading-content">
-                <h1 class="text-white text-xxl">[[${category.spec.displayName}]]</h1>
+                <h1 class="text-white text-xxl">
+                  <span>[[${category.spec.displayName}]]</span>
+                  <sup class="font-number fw-normal" th:text="'['+${category.status.postCount} +']'"></sup>
+                </h1>
               </div>
             </div>
 

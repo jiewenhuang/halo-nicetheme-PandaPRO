@@ -1,0 +1,927 @@
+:root {
+    /**Color**/
+    --black: #000;
+    --white: #fff;
+    --gray-1: #f7f7fb;
+    --gray-2: #f3f3f4;
+    --gray-3: #e7e8eb;
+    --gray-4: #dcdee0;
+    --gray-5: #c8c9cc;
+    --gray-6: #a2a6b1;
+    --gray-7: #424a57;
+    --gray-8: #20232b;
+    --red: #ea1414;
+    --blue: #3858F6;
+    --orange: #ff8338;
+    --orange-dark: #ff8338;
+    --orange-light: #fffbe8;
+    --green: #34968e;
+
+    /**Gradient Colors**/
+    --gradient-red: linear-gradient(to right, #ff6034, var(--red));
+    --gradient-orange: linear-gradient(to right, #ffd01e, var(--orange));
+
+    /**Component Colors**/
+    --primary-color: var(--blue);
+    --success-color: var(--green);
+    --danger-color: var(--red);
+    --warning-color: var(--orange);
+    --text-color: var(--gray-8);
+    --active-color: var(--gray-7);
+    --active-opacity: 0.7;
+    --disabled-opacity: 0.5;
+    --background-color: var(--gray-1);
+    --background-color-light: #fafafa;
+    --text-link-color: var(--gray-6);
+
+    /**Font**/
+    --font-size-xs: 10px;
+    --font-size-sm: 12px;
+    --font-size-md: 14px;
+    --font-size-lg: 16px;
+    --font-size-xl: 24px;
+    --font-weight-bold: 500;
+    --line-height-xs: 14px;
+    --line-height-sm: 18px;
+    --line-height-md: 20px;
+    --line-height-lg: 22px;
+    --base-font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
+        Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB',
+        'Microsoft Yahei', sans-serif;
+
+    /**Animation**/
+    --animation-duration-base: 0.3s;
+    --animation-duration-fast: 0.2s;
+    --animation-timing-function-enter: ease-out;
+    --animation-timing-function-leave: ease-in;
+
+    /**Border**/
+    --border-color: var(--gray-2);
+    --border-width-base: 1px;
+    --border-radius-xs: 5px;
+    --border-radius-sm: 7px;
+    --border-radius-md: 9px;
+    --border-radius-lg: 15px;
+    --border-radius-max: 999px;
+
+    /**Theme Color**/
+    --color-primary: var(--primary-color);
+    --color-dark: var(--gray-8);
+    --color-secondary: var(--gray-7);
+    --color-muted: var(--gray-6);
+    --color-light: var(--gray-3);
+    --color-danger: var(--danger-color);
+    --color-warning: var(--warning-color);
+    --color-success: var(--success-color);
+    --color-body: var(--text-color);
+
+    /**Theme Btn Color**/
+    --btn-primary: var(--primary-color);
+    --btn-dark: var(--gray-8);
+    --btn-secondary: var(--gray-7);
+    --btn-light: var(--gray-2);
+    --btn-danger: var(--danger-color);
+    --btn-success: var(--success-color);
+
+    /**Theme Bg Color**/
+    --bg-primary: var(--primary-color);
+    --bg-dark: var(--gray-8);
+    --bg-secondary: var(--gray-7);
+    --bg-light: var(--gray-2);
+    --bg-danger: var(--danger-color);
+    --bg-warning: var(--warning-color);
+    --bg-white: #fff;
+    --bg-body: var(--gray-1);
+
+    /**Theme Border Color**/
+    --border-primary: var(--primary-color);
+    --border-dark: var(--gray-8);
+    --border-secondary: var(--gray-7);
+    --border-light: var(--gray-2);
+    --border-danger: var(--danger-color);
+    --border-warning: var(--warning-color);
+    --border-white: #fff;
+
+    --outline-primary: rgba(25, 137, 250, 0.1);
+    --outline-secondary: rgba(38, 38, 38, 0.1);
+    --outline-light: rgba(38, 38, 38, 0.05);
+    --outline-danger: rgba(238, 10, 37, 0.1);
+
+    /**Dark Mode Color**/
+    --dark-color-dark: var(--gray-1);
+    --dark-color-secondary: var(--gray-2);
+    --dark-color-muted: var(--gray-5);
+    --dark-color-light: var(--gray-4);
+    --dark-color-body: var(--gray-3);
+
+    --dark-bg-dark: #1f1f1f;
+    --dark-bg-secondary: #242525;
+    --dark-bg-light: #3d3e3e;
+    --dark-bg-white: #000;
+    --dark-bg-body: #18191A;
+
+    --swiper-pagination-bullet-inactive-color: #fff;
+    --swiper-pagination-color: #fff;
+    --swiper-theme-color: #fff;
+
+    /**Theme shadow Color**/
+    --shadow-1: rgb(27 26 49 / 2%);
+    --shadow-2: rgb(27 26 49 / 5%);
+    --shadow: 0 12px 28px 0 var(--shadow-2), 0 5px 10px 0 var(--shadow-1);
+}
+
+
+/* General ------------------------------------- */
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Hiragino Sans GB, Microsoft YaHei UI, Microsoft YaHei, Source Han Sans CN, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+    font-size: .9375rem;
+    color: var(--color-body);
+    background-color: var(--bg-body);
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased
+}
+
+
+
+/* Links ------------------------------------- */
+
+a {
+    color: var(--color-dark);
+    text-decoration: none;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+a:link,
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--color-primary)
+}
+
+a:focus {
+    outline: 0;
+}
+
+a:not([href]):not([class]),
+a:not([href]):not([class]):hover {
+    color: inherit;
+    text-decoration: none
+}
+
+h1>a,
+h2>a,
+h3>a,
+h4>a,
+h5>a,
+h6>a,
+.h1>a,
+.h2>a,
+.h3>a,
+.h4>a,
+.h5>a,
+.h6>a {
+    color: var(--color-dark);
+}
+
+h1>a:hover,
+h2>a:hover,
+h3>a:hover,
+h4>a:hover,
+h5>a:hover,
+h6>a:hover,
+.h1>a:hover,
+.h2>a:hover,
+.h3>a:hover,
+.h4>a:hover,
+.h5>a:hover,
+.h6>a:hover {
+    color: var(--color-primary);
+}
+
+/*--------------------------------------------------------------
+/*	Element Base
+--------------------------------------------------------------*/
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: bolder;
+    margin: 0;
+}
+
+/*--------------------------------------------------------------
+/*	Font Size style
+--------------------------------------------------------------*/
+
+h1,
+.h1 {
+    font-size: 2rem;
+    line-height: 1.4;
+}
+
+h2,
+.h2 {
+    font-size: 1.75rem;
+    line-height: 1.4;
+}
+
+h3,
+.h3 {
+    font-size: 1.375rem;
+    line-height: 1.5;
+}
+
+h4,
+.h4 {
+    font-size: 1.25rem;
+    line-height: 1.5;
+}
+
+h5,
+.h5 {
+    font-size: 1.125rem;
+    line-height: 1.5;
+}
+
+h6,
+.h6 {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+
+    h1,
+    .h1 {
+        font-size: 1.75rem;
+    }
+
+    h2,
+    .h2 {
+        font-size: 1.5rem;
+    }
+
+    h3,
+    .h3 {
+        font-size: 1.25rem;
+    }
+
+    h4,
+    .h4 {
+        font-size: 1.125rem;
+    }
+
+    h5,
+    .h5 {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+
+    h1,
+    .h1 {
+        font-size: 1.5rem;
+    }
+
+    h2,
+    .h2 {
+        font-size: 1.25rem;
+    }
+
+    h3,
+    .h3 {
+        font-size: 1.125rem;
+    }
+
+    h4,
+    .h4 {
+        font-size: 1rem;
+    }
+
+    h5,
+    .h5 {
+        font-size: 1rem;
+    }
+
+}
+
+.h4 .small,
+.h4 small,
+.h5 .small,
+.h5 small,
+.h6 .small,
+.h6 small,
+h4 .small,
+h4 small,
+h5 .small,
+h5 small,
+h6 .small,
+h6 small {
+    font-size: 85%
+}
+
+
+/* Lists ------------------------------------- */
+
+menu,
+ul,
+ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+dt,
+dd {
+    line-height: 1.5;
+}
+
+dt {
+    font-weight: 500;
+}
+
+dt+dd {
+    margin-top: .5rem;
+}
+
+dd+dt {
+    margin-top: 1.5rem;
+}
+
+
+/* Quotes ------------------------------------ */
+
+blockquote {
+    padding: 16px 20px;
+    margin: 24px 0;
+    background-color: var(--bg-light);
+    border-radius: var(--radius-sm);
+}
+
+blockquote::before,
+blockquote::after {
+    content: "";
+}
+
+cite {
+    color: inherit;
+    font-size: 85%;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.25;
+}
+
+blockquote cite {
+    display: block;
+    margin: 32px 0 0 0;
+}
+
+blockquote p,
+blockquote>p:last-child {
+    margin-bottom: 32px;
+}
+
+blockquote p:last-child {
+    margin: 0;
+}
+
+blockquote em,
+blockquote i,
+blockquote cite {
+    font-style: normal;
+}
+
+
+/* Media ------------------------------------- */
+
+figure {
+    margin: 0;
+}
+
+img,
+embed,
+iframe,
+object,
+video {
+    max-width: 100%;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+
+.wp-block-video video {
+    height: auto;
+}
+
+/*--------------------------------------------------------------
+* Add the correct display in IE 10+.
+--------------------------------------------------------------*/
+
+template {
+    display: none;
+}
+
+/*--------------------------------------------------------------
+* Add the correct display in IE 10.
+--------------------------------------------------------------*/
+
+[hidden] {
+    display: none;
+}
+
+/*--------------------------------------------------------------
+* Add reset 
+--------------------------------------------------------------*/
+p {
+    margin: 0;
+}
+
+i {
+    font-style: normal;
+}
+
+/*--------------------------------------------------------------
+/*	Size style
+--------------------------------------------------------------*/
+
+.w-8 {
+    width: .5rem;
+    height: .5rem
+}
+
+.w-12 {
+    width: .75rem;
+    height: .75rem
+}
+
+.w-16 {
+    width: 1rem;
+    height: 1rem
+}
+
+.w-20 {
+    width: 1.25rem;
+    height: 1.25rem;
+    font-size: 0.6em
+}
+
+.w-24 {
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.7em
+}
+
+.w-28 {
+    width: 1.75rem;
+    height: 1.75rem;
+    font-size: 0.8em
+}
+
+.w-32 {
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.85em
+}
+
+.w-36 {
+    width: 2.25rem;
+    height: 2.25rem;
+    font-size: 0.875em
+}
+
+.w-40 {
+    width: 2.5rem;
+    height: 2.5rem
+}
+
+.w-48 {
+    width: 3rem;
+    height: 3rem
+}
+
+.w-56 {
+    width: 3.5rem;
+    height: 3.5rem
+}
+
+.w-64 {
+    width: 4rem;
+    height: 4rem
+}
+
+.w-72 {
+    width: 4.5rem;
+    height: 4.5rem
+}
+
+.w-80 {
+    width: 5rem;
+    height: 5rem
+}
+
+.w-96 {
+    width: 6rem;
+    height: 6rem
+}
+
+.w-128 {
+    width: 8rem;
+    height: 8rem;
+}
+
+.w-168 {
+    width: 10.5rem;
+    height: 10.5rem;
+}
+
+.w-192 {
+    width: 12rem
+}
+
+.w-xs {
+    width: 5.625rem
+}
+
+.w-auto {
+    width: auto
+}
+
+.h-auto {
+    height: auto
+}
+
+.hv {
+    height: 100vh
+}
+
+.h-v {
+    min-height: 100vh
+}
+
+.h-v-30 {
+    min-height: 30vh
+}
+
+.h-v-33 {
+    min-height: 33vh
+}
+
+.h-v-50 {
+    min-height: 50vh
+}
+
+.h-v-66 {
+    min-height: 66vh
+}
+
+.h-v-75 {
+    min-height: 75vh
+}
+
+@media (max-width:1199.98px) {
+    .w-auto-lg {
+        width: auto
+    }
+
+    .w-100-lg {
+        width: 100%
+    }
+}
+
+@media (max-width:991.98px) {
+    .w-auto-md {
+        width: auto
+    }
+
+    .w-100-md {
+        width: 100%
+    }
+}
+
+@media (max-width:767.98px) {
+    .w-auto-sm {
+        width: auto
+    }
+
+    .w-100-sm {
+        width: 100%
+    }
+}
+
+@media (max-width:575.98px) {
+    .w-auto-xs {
+        width: auto
+    }
+
+    .w-100-xs {
+        width: 100%
+    }
+}
+
+@media (min-width: 768px) {
+    .h-v-25 {
+        min-height: 25vh
+    }
+}
+
+/*--------------------------------------------------------------
+/*	 Text Size style
+--------------------------------------------------------------*/
+
+.text-xs {
+    font-size: .75rem
+}
+
+.text-sm {
+    font-size: .875rem
+}
+
+.text-md {
+    font-size: 1.125rem
+}
+
+.text-lg {
+    font-size: 1.25rem
+}
+
+.text-xl {
+    font-size: 1.375rem
+}
+
+.text-xxl {
+    font-size: 1.75rem
+}
+
+.text-40 {
+    font-size: 2.5rem
+}
+
+.text-50 {
+    font-size: 3.125rem
+}
+
+.text-64 {
+    font-size: 4rem
+}
+
+@media (max-width: 767.98px) {
+    .text-xs {
+        font-size: .75rem
+    }
+
+    .text-sm {
+        font-size: .875rem
+    }
+
+    .text-md {
+        font-size: 1rem
+    }
+
+    .text-lg {
+        font-size: 1.125rem
+    }
+
+    .text-xl {
+        font-size: 1.25rem
+    }
+
+    .text-xxl {
+        font-size: 1.5rem
+    }
+}
+
+/*--------------------------------------------------------------
+/*	Font height style
+--------------------------------------------------------------*/
+
+.lh-lg {
+    line-height: 1.85
+}
+
+/* Icon style ----------------------------- */
+
+.iconfont {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+}
+
+.icon-md.iconfont {
+    top: -.125rem;
+}
+
+.icon-sm.iconfont {
+    top: -.0625rem;
+}
+
+/* Tooltip style ----------------------------- */
+
+@media (min-width: 768px) {
+    [tooltip] {
+        position: relative;
+        /* opinion 1 */
+        cursor: pointer;
+    }
+
+    /* Applies to all tooltips */
+    [tooltip]::before,
+    [tooltip]::after {
+        text-transform: none;
+        font-size: 13px;
+        line-height: 1;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        pointer-events: none;
+        position: absolute;
+        display: none;
+        opacity: 0;
+    }
+
+    [tooltip]::before {
+        content: '';
+        border: 5px solid transparent;
+        /* opinion 4 */
+        z-index: 1001;
+        /* absurdity 1 */
+    }
+
+    [tooltip]::after {
+        content: attr(tooltip);
+        text-align: center;
+        min-width: 3em;
+        max-width: 21em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: 10px 20px;
+        background-color: var(--bg-dark);
+        color: #fff;
+        border-radius: 3rem;
+        -webkit-box-shadow: 0px 2px 15px -5px rgb(10 10 10 / 3%);
+        box-shadow: 0px 2px 15px -5px rgb(10 10 10 / 3%);
+        z-index: 1000
+            /* absurdity 2 */
+    }
+
+    /* Make the tooltips respond to hover */
+    [tooltip]:hover::before,
+    [tooltip]:hover::after {
+        display: block;
+    }
+
+    /* don't show empty tooltips */
+    [tooltip='']::before,
+    [tooltip='']::after {
+        display: none;
+    }
+
+    /* FLOW: UP */
+    [tooltip]:not([flow])::before,
+    [tooltip][flow^="up"]::before {
+        bottom: 100%;
+        border-bottom-width: 0;
+        border-top-color: #333;
+    }
+
+    [tooltip]:not([flow])::after,
+    [tooltip][flow^="up"]::after {
+        bottom: calc(100% + 5px);
+    }
+
+    [tooltip]:not([flow])::before,
+    [tooltip]:not([flow])::after,
+    [tooltip][flow^="up"]::before,
+    [tooltip][flow^="up"]::after {
+        left: 50%;
+        -webkit-transform: translate(-50%, -.5em);
+        transform: translate(-50%, -.5em);
+    }
+
+    /* FLOW: DOWN */
+    [tooltip][flow^="down"]::before {
+        top: 100%;
+        border-top-width: 0;
+        border-bottom-color: #333;
+    }
+
+    [tooltip][flow^="down"]::after {
+        top: calc(100% + 5px);
+    }
+
+    [tooltip][flow^="down"]::before,
+    [tooltip][flow^="down"]::after {
+        left: 50%;
+        -webkit-transform: translate(-50%, .5em);
+        transform: translate(-50%, .5em);
+    }
+
+    /* FLOW: LEFT */
+    [tooltip][flow^="left"]::before {
+        top: 50%;
+        border-right-width: 0;
+        border-left-color: #333;
+        left: calc(0em - 5px);
+        -webkit-transform: translate(-.5em, -50%);
+        transform: translate(-.5em, -50%);
+    }
+
+    [tooltip][flow^="left"]::after {
+        top: 50%;
+        right: calc(100% + 5px);
+        -webkit-transform: translate(-.5em, -50%);
+        transform: translate(-.5em, -50%);
+    }
+
+    /* FLOW: RIGHT */
+    [tooltip][flow^="right"]::before {
+        top: 50%;
+        border-left-width: 0;
+        border-right-color: #333;
+        right: calc(0em - 5px);
+        -webkit-transform: translate(.5em, -50%);
+        transform: translate(.5em, -50%);
+    }
+
+    [tooltip][flow^="right"]::after {
+        top: 50%;
+        left: calc(100% + 5px);
+        -webkit-transform: translate(.5em, -50%);
+        transform: translate(.5em, -50%);
+    }
+
+    /* KEYFRAMES */
+    @-webkit-keyframes tooltips-vert {
+        to {
+            opacity: .9;
+            -webkit-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+        }
+    }
+
+    @keyframes tooltips-vert {
+        to {
+            opacity: .9;
+            -webkit-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+        }
+    }
+
+    @-webkit-keyframes tooltips-horz {
+        to {
+            opacity: .9;
+            -webkit-transform: translate(0, -50%);
+            transform: translate(0, -50%);
+        }
+    }
+
+    @keyframes tooltips-horz {
+        to {
+            opacity: .9;
+            -webkit-transform: translate(0, -50%);
+            transform: translate(0, -50%);
+        }
+    }
+
+    /* FX All The Things */
+    [tooltip]:not([flow]):hover::before,
+    [tooltip]:not([flow]):hover::after,
+    [tooltip][flow^="up"]:hover::before,
+    [tooltip][flow^="up"]:hover::after,
+    [tooltip][flow^="down"]:hover::before,
+    [tooltip][flow^="down"]:hover::after {
+        -webkit-animation: tooltips-vert 300ms ease-out forwards;
+        animation: tooltips-vert 300ms ease-out forwards;
+    }
+
+    [tooltip][flow^="left"]:hover::before,
+    [tooltip][flow^="left"]:hover::after,
+    [tooltip][flow^="right"]:hover::before,
+    [tooltip][flow^="right"]:hover::after {
+        -webkit-animation: tooltips-horz 300ms ease-out forwards;
+        animation: tooltips-horz 300ms ease-out forwards;
+    }
+}

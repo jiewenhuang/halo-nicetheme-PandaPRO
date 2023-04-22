@@ -5,8 +5,8 @@
   <header class="site-navbar navbar navbar-expand-xl">
     <div class="container">
       <a th:href="${site.url}" class="navbar-brand">
-        <img th:src="${theme.config.basic.logo}" alt="Logo" class="light-logo">
-        <img th:src="${theme.config.basic.logo_dark}" alt="Logo" class="dark-logo">
+        <img th:src="${theme.config.basic.logo}" alt="Logo" class="logo light-logo">
+        <img th:src="${theme.config.basic.logo_dark}" alt="Logo" class="logo dark-logo">
       </a>
       <div class="collapse navbar-collapse" id="navbarToggler">
         <th:block th:if="${#lists.isEmpty(theme.config.header.menuItem)}">
