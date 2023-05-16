@@ -15,6 +15,22 @@
         <th:block th:replace="modules/widgets/asideWidgets :: ${widgets}" />
       </th:block>
     </th:block>
+      <!--  文章页-->
+      <th:block th:if="${htmlType == 'moments'}">
+        <th:block th:each="widgets : ${#strings.listSplit(theme.config.other.momentsWidgets, ',')}">
+          <th:block th:replace="modules/widgets/asideWidgets :: ${widgets}" />
+        </th:block>
+      </th:block>
+      <th:block th:if="${htmlType == 'category'}">
+        <th:block th:each="widgets : ${#strings.listSplit(theme.config.other.categoryWidgets, ',')}">
+          <th:block th:replace="modules/widgets/asideWidgets :: ${widgets}" />
+        </th:block>
+      </th:block>
+      <th:block th:if="${htmlType == 'tag'}">
+        <th:block th:each="widgets : ${#strings.listSplit(theme.config.other.categoryWidgets, ',')}">
+          <th:block th:replace="modules/widgets/asideWidgets :: ${widgets}" />
+        </th:block>
+      </th:block>
       <div class="resize-sensor" style="position: absolute; inset: 0px; overflow: hidden; z-index: -1; visibility: hidden;">
         <div class="resize-sensor-expand" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;">
           <div style="position: absolute; left: 0px; top: 0px; transition: all; width: 404px; height: 2294px;"></div>

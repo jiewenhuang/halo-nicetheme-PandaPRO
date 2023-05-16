@@ -154,7 +154,6 @@ body {
 a {
     color: var(--color-dark);
     text-decoration: none;
-    -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
 
@@ -650,7 +649,7 @@ i {
 --------------------------------------------------------------*/
 
 .text-xs {
-    font-size: .75rem
+    font-size: .8125rem
 }
 
 .text-sm {
@@ -781,7 +780,6 @@ i {
         background-color: var(--bg-dark);
         color: #fff;
         border-radius: 3rem;
-        -webkit-box-shadow: 0px 2px 15px -5px rgb(10 10 10 / 3%);
         box-shadow: 0px 2px 15px -5px rgb(10 10 10 / 3%);
         z-index: 1000
             /* absurdity 2 */
@@ -817,7 +815,6 @@ i {
     [tooltip][flow^="up"]::before,
     [tooltip][flow^="up"]::after {
         left: 50%;
-        -webkit-transform: translate(-50%, -.5em);
         transform: translate(-50%, -.5em);
     }
 
@@ -835,7 +832,6 @@ i {
     [tooltip][flow^="down"]::before,
     [tooltip][flow^="down"]::after {
         left: 50%;
-        -webkit-transform: translate(-50%, .5em);
         transform: translate(-50%, .5em);
     }
 
@@ -845,14 +841,12 @@ i {
         border-right-width: 0;
         border-left-color: #333;
         left: calc(0em - 5px);
-        -webkit-transform: translate(-.5em, -50%);
         transform: translate(-.5em, -50%);
     }
 
     [tooltip][flow^="left"]::after {
         top: 50%;
         right: calc(100% + 5px);
-        -webkit-transform: translate(-.5em, -50%);
         transform: translate(-.5em, -50%);
     }
 
@@ -862,14 +856,12 @@ i {
         border-left-width: 0;
         border-right-color: #333;
         right: calc(0em - 5px);
-        -webkit-transform: translate(.5em, -50%);
         transform: translate(.5em, -50%);
     }
 
     [tooltip][flow^="right"]::after {
         top: 50%;
         left: calc(100% + 5px);
-        -webkit-transform: translate(.5em, -50%);
         transform: translate(.5em, -50%);
     }
 
@@ -877,7 +869,6 @@ i {
     @-webkit-keyframes tooltips-vert {
         to {
             opacity: .9;
-            -webkit-transform: translate(-50%, 0);
             transform: translate(-50%, 0);
         }
     }
@@ -885,7 +876,6 @@ i {
     @keyframes tooltips-vert {
         to {
             opacity: .9;
-            -webkit-transform: translate(-50%, 0);
             transform: translate(-50%, 0);
         }
     }
@@ -893,7 +883,6 @@ i {
     @-webkit-keyframes tooltips-horz {
         to {
             opacity: .9;
-            -webkit-transform: translate(0, -50%);
             transform: translate(0, -50%);
         }
     }
@@ -901,7 +890,6 @@ i {
     @keyframes tooltips-horz {
         to {
             opacity: .9;
-            -webkit-transform: translate(0, -50%);
             transform: translate(0, -50%);
         }
     }

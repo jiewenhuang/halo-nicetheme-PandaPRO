@@ -13,11 +13,14 @@
               <div class="post-meta d-flex align-items-center" x-data="postMetaData">
                 <th:block th:with="contributor = ${contributorFinder.getContributor(post.status.contributors[0])}"
                 >
-                <a href="#" th:title="${contributor.displayName}" class="d-flex align-items-center flex-fill">
+                <a th:href="${contributor.permalink}" th:title="${contributor.displayName}" class="d-flex align-items-center flex-fill">
                   <div class="flex-avatar w-32 me-2">
                     <img th:src="${contributor.avatar ?: #theme.assets('/images/jiewen_icon.png')}" th:alt="${contributor.displayName}">
                   </div>
-                  <div class="h-1x">[[${contributor.displayName}]]</div>
+                  <div class="lh-1">
+                    <div class="h-1x">[[${contributor.displayName}]]</div>
+                    <div class="font-number text-muted text-xs mt-1">[[${#dates.format(post.spec.publishTime,'yyyy-MM-dd')}]]</div>
+                  </div>
                 </a>
                 </th:block>
                 <span><i class="text-md icon-sm iconfont icon-dakaiyanjing"></i>

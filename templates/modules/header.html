@@ -27,8 +27,19 @@
             <ul class="navbar-site navbar-nav me-auto ms-lg-5"
                 th:with="menuItems = ${menu.menuItems}">
               <li class="menu-item"
+                  th:classappend="${not #lists.isEmpty(menuItem.children)} ? 'menu-item-has-children'"
                   th:each="menuItem : ${menuItems}">
                 <a th:href="@{${menuItem.status.href}}">[[${menuItem.status.displayName}]]</a>
+                <th:block th:if="${not #lists.isEmpty(menuItem.children)}">
+                <span class="menu-sign"></span>
+                <ul class="sub-menu">
+                  <li class="menu-item"
+                      th:each="childMenu : ${menuItem.children}">
+                    <a th:href="@{${childMenu.status.href}}"
+                       th:target="${childMenu.spec.target?.value}">[[${childMenu.status.displayName}]]</a>
+                  </li>
+                </ul>
+                </th:block>
 
               </li>
 

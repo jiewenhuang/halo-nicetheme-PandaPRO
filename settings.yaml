@@ -72,6 +72,18 @@ spec:
           name: menuItem
           label: 导航栏
           value: ""
+    - group: post
+      label: 文章
+      formSchema:
+        - $formkit: radio
+          name: highlight
+          label: 是否开启默认代码块高亮
+          value: true
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
     - group: personal
       label: 个人信息
       formSchema:
@@ -106,6 +118,18 @@ spec:
           name: postWidgets
           label: 文章右侧小组件
           value: "random,personal,hotPost,linePost,category,tag,toc"
+        - $formkit: textarea
+          name: momentsWidgets
+          label: 瞬时右侧小组件
+          value: "random,personal,hotPost,linePost,category,tag"
+        - $formkit: textarea
+          name: categoryWidgets
+          label: 分类右侧小组件
+          value: "random,personal,hotPost,linePost,category,tag"
+        - $formkit: textarea
+          name: tagWidgets
+          label: 标签右侧小组件
+          value: "random,personal,hotPost,linePost,category,tag"
         - $formkit: repeater
           name: socials
           id: socials

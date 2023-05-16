@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{modules/layout :: html(title = ${site.title},htmlType = moments,header = null,leftSidebar = true,content = ~{::content}, head = null, footer = null)}"
+>
+<th:block th:fragment="content">
+    <main class="site-main h-v-75" style="transform: none;">
+        <div class="container" style="transform: none;">
+            <div class="row gx-3 gx-lg-4 justify-content-center" style="transform: none;">
+                <div class="col-lg-10 col-xl-8">
+                    <div class="author-info card mb-3">
+                        <div class="author-cover" th:style="'background-image: url('+ ${theme.config.personal.profileImg ?: #theme.assets('/images/img00051.jpg')}+')'"></div>
+                        <div class="author-meta">
+                            <div class="author-avatar flex-avatar">
+                                <img th:src="${theme.config.personal.profileAvatar ?: #theme.assets('/images/jiewen_icon.png')}" th:alt="${theme.config.personal.profileName ?: site.title}">
+                            </div>
+                            <h1 class="text-md text-dark">[[${theme.config.personal.profileName ?: site.title}]]</h1>
+                            <div class="text-sm text-secondary mt-2">[[${theme.config.personal.profileDesc}]]</div>
+                            <div class="d-flex align-items-center mt-2">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="moments-list">
+                        <th:block th:each="moment : ${moments.items}" th:with="content=${moment.spec.content}">
+                        <div th:x-data="'{ postId: '+'\'' + ${moment.metadata.name} + '\''+' , likesCount: '+${moment.stats.upvote}+'}'" class="item block mb-3">
+                            <div x-data="postMetaData" class="item-info d-flex align-items-center flex-fill mb-2">
+                                <div class="author-avatar flex-avatar">
+                                    <img th:src="${theme.config.personal.profileAvatar ?: #theme.assets('/images/jiewen_icon.png')}" th:alt="${theme.config.personal.profileName ?: site.title}">
+
+                                </div>
+                                <div class="lh-1">
+                                    <div class="author-name">[[${moment.owner.displayName}]]</div>
+                                    <div class="text-xs text-muted mt-1">[[${#dates.format(moment.spec.releaseTime,'YYYY-MM-dd HH:mm:ss')}]]</div>
+                                </div>
+                                <div class="flex-fill"></div>
+                                <a href="javascript:;" @click="like('moment')" :class="{ active: liked }" class="moment-like-taggle font-number mx-2"><i class="text-xl iconfont icon-dianzan-xiankuang me-1"></i><span x-text="likesCount">2</span></a>
+                            </div>
+                            <div class="text-secondary mb-2"
+                                 th:if="${not #strings.isEmpty(content.html)}"
+                                 th:utext="${content.html}"></div>
+                            <div class="row g-1">
+
+                                <div class="col-3" th:if="${not #lists.isEmpty(content.medium)}" th:each="momentItem : ${content.medium}">
+                                    <div class="media rounded">
+                                        <a th:href="${momentItem.url}" class="media-content glightbox" th:style="'background-image: url('+${momentItem.url}+')'"></a>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        </th:block>
+                        <th:block th:replace="~{modules/widgets/pagination :: pagination}" />
+
+                    </div>
+                </div>
+                <th:block th:replace="~{modules/right-widget :: right-widget}" />
+            </div>
+        </div>
+    </main>
+</th:block>
+</html>

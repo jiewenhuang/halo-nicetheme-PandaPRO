@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="pagination">
+  <th:block th:if="${htmlType == 'index'}">
+  <nav id="pagination" class="mt-3 mt-md-4"
+       th:if="${posts.hasPrevious() || posts.hasNext()}"
+       th:with="totalPages = ${posts.totalPages}, pageIndex = ${posts.page}">
+    <div class="pagination" th:if="${(totalPages le 7) && (totalPages gt 0)}">
+
+      <!-- 上一页 -->
+      <a class="extend prev" rel="prev"
+         th:href="@{${posts.prevUrl}}"
+         th:if="${posts.hasPrevious()}"
+         data-pjax-state>
+        <i class="iconfont icon-zuobian"></i>
+      </a>
+      <a class="page-number"
+         th:classappend="${index eq pageIndex} ? 'current'"
+         th:each="index : ${#numbers.sequence(1, totalPages)}"
+         th:href="${'/page/' + index}"
+         th:text="${index}">
+      </a>
+      <!-- 下一页 -->
+      <a class="extend next"
+         th:href="@{${posts.nextUrl}}" th:if="${posts.hasNext()}">
+        <!--                                        <div class="pagination_tips_next">下页</div>-->
+        <i class="iconfont icon-youbian"></i>
+      </a>
+    </div>
+    <!-- 页面大于 7 -->
+    <div class="pagination" th:if="${totalPages gt 7}">
+      <a class="extend prev" th:href="@{${posts.prevUrl}}" th:if="${posts.hasPrevious()}">
+        <i class="iconfont icon-zuobian"></i>
+      </a>
+      <a class="page-number" href="/" th:classappend="${1 eq pageIndex} ? 'current'">1</a>
+      <!-- 当前页面小于等于4 -->
+      <a class="page-number"
+         th:classappend="${index eq pageIndex} ? 'current'" th:each="index : ${#numbers.sequence(2,5)}"
+         th:if="${pageIndex le 4}"
+         th:href="${'/page/' + index}" th:text="${index}">
+      </a>
+      <span class="space" th:if="${pageIndex le 4}">…</span>
+      <!-- 最后一页与当前页面之差小于等于3 -->
+      <span class="space" th:if="${totalPages - pageIndex le 3}">…</span>
+      <a class="page-number"
+         th:classappend="${index eq pageIndex} ? 'current'"
+         th:each="index : ${#numbers.sequence(totalPages - 4, totalPages - 1)}"
+         th:if="${totalPages - pageIndex le 3}"
+         th:href="${'/page/' + index}" th:text="${index}">
+      </a>
+      <!-- 最后一页与当前页面之差大于3 且当前页面大于4 -->
+      <span class="space" th:if="${(pageIndex gt 4) && (totalPages - pageIndex gt 3)}">…</span>
+      <a class="page-number"
+         th:each="index : ${#numbers.sequence(pageIndex - 1,pageIndex + 1)}"
+         th:if="${(pageIndex gt 4) && (totalPages - pageIndex gt 3)}"
+         th:href="${'/page/' + index}" th:text="${index}">
+      </a>
+      <span class="space" th:if="${(pageIndex gt 4) && (totalPages - pageIndex gt 3)}">…</span>
+      <!-- 尾页 -->
+      <a class="page-number"
+         th:classappend="${index eq pageIndex} ? 'current'"
+         th:text="${totalPages}"
+         th:href="${'/page/'+totalPages}">
+      </a>
+      <a class="extend next"
+         th:href="@{${posts.nextUrl}}" th:if="${posts.hasNext()}">
+        <i class="iconfont icon-youbian"></i>
+      </a>
+    </div>
+
+  </nav>
+  </th:block>
+  <th:block th:if="${htmlType == 'category'}" th:fragment="category">
+    <nav id="pagination" th:if="${posts.hasPrevious() || posts.hasNext()}"
+         th:with="totalPages = ${posts.totalPages}, pageIndex = ${posts.page}"
+         class="mt-3 mt-md-4">
+      <div class="pagination" th:if="${(totalPages le 7) && (totalPages gt 0)}">
+
+        <!-- 上一页 -->
+        <a class="extend prev" rel="prev" th:href="@{${posts.prevUrl}}" th:if="${posts.hasPrevious()}">
+          <i class="iconfont icon-zuobian"></i>
+        </a>
+        <a class="page-number"
+           th:classappend="${index eq pageIndex} ? 'current'"
+           th:each="index : ${#numbers.sequence(1, totalPages)}"
+           th:href="@{${category.status.permalink+'/page/' + index}}"
+           th:text="${index}">
+        </a>
+        <!-- 下一页 -->
+        <a class="extend next"
+           th:href="@{${posts.nextUrl}}" th:if="${posts.hasNext()}">
+          <!--                                        <div class="pagination_tips_next">下页</div>-->
+          <i class="iconfont icon-youbian"></i>
+        </a>
+      </div>
+      <!-- 页面大于 7 -->
+      <div class="pagination" th:if="${totalPages gt 7}">
+        <a class="extend prev" th:href="@{${posts.prevUrl}}" th:if="${posts.hasPrevious()}">
+          <i class="iconfont icon-zuobian"></i>
+        </a>
+        <a class="page-number" th:href="${category.status.permalink}" th:classappend="${1 eq pageIndex} ? 'current'">1</a>
+        <!-- 当前页面小于等于4 -->
+        <a class="page-number"
+           th:classappend="${index eq pageIndex} ? 'current'" th:each="index : ${#numbers.sequence(2,5)}"
+           th:if="${pageIndex le 4}"
+           th:href="@{${category.status.permalink+'/page/' + index}}" th:text="${index}">
+        </a>
+        <span class="space" th:if="${pageIndex le 4}">…</span>
+        <!-- 最后一页与当前页面之差小于等于3 -->
+        <span class="space" th:if="${totalPages - pageIndex le 3}">…</span>
+        <a class="page-number"
+           th:classappend="${index eq pageIndex} ? 'current'"
+           th:each="index : ${#numbers.sequence(totalPages - 4, totalPages - 1)}"
+           th:if="${totalPages - pageIndex le 3}"
+           th:href="@{${category.status.permalink+'/page/' + index}}" th:text="${index}">
+        </a>
+        <!-- 最后一页与当前页面之差大于3 且当前页面大于4 -->
+        <span class="space" th:if="${(pageIndex gt 4) && (totalPages - pageIndex gt 3)}">…</span>
+        <a class="page-number"
+           th:each="index : ${#numbers.sequence(pageIndex - 1,pageIndex + 1)}"
+           th:if="${(pageIndex gt 4) && (totalPages - pageIndex gt 3)}"
+           th:href="@{${category.status.permalink+'/page/' + index}}" th:text="${index}">
+        </a>
+        <span class="space" th:if="${(pageIndex gt 4) && (totalPages - pageIndex gt 3)}">…</span>
+        <!-- 尾页 -->
+        <a class="page-number"
+           th:classappend="${index eq pageIndex} ? 'current'"
+           th:text="${totalPages}"
+           th:href="@{${category.status.permalink+'/page/' + totalPages}}">
+        </a>
+        <a class="extend next"
+           th:href="@{${posts.nextUrl}}" th:if="${posts.hasNext()}">
+          <i class="iconfont icon-youbian"></i>
+        </a>
+      </div>
+
+    </nav>
+  </th:block>
+  <th:block th:if="${htmlType == 'tag'}" th:fragment="tag">
+    <nav id="pagination" th:if="${posts.hasPrevious() || posts.hasNext()}"
+         th:with="totalPages = ${posts.totalPages}, pageIndex = ${posts.page}"
+         class="mt-3 mt-md-4">
+      <div class="pagination" th:if="${(totalPages le 7) && (totalPages gt 0)}">
+
+        <!-- 上一页 -->
+        <a class="extend prev" rel="prev" th:href="@{${posts.prevUrl}}" th:if="${posts.hasPrevious()}">
+          <i class="iconfont icon-zuobian"></i>
+        </a>
+        <a class="page-number"
+           th:classappend="${index eq pageIndex} ? 'current'"
+           th:each="index : ${#numbers.sequence(1, totalPages)}"
+           th:href="@{${tag.status.permalink+'/page/' + index}}"
+           th:text="${index}">
+        </a>
+        <!-- 下一页 -->
+        <a class="extend next"
+           th:href="@{${posts.nextUrl}}" th:if="${posts.hasNext()}">
+          <!--                                        <div class="pagination_tips_next">下页</div>-->
+          <i class="iconfont icon-youbian"></i>
+        </a>
+      </div>
+      <!-- 页面大于 7 -->
+      <div class="pagination" th:if="${totalPages gt 7}">
+        <a class="extend prev" th:href="@{${posts.prevUrl}}" th:if="${posts.hasPrevious()}">
+          <i class="iconfont icon-zuobian"></i>
+        </a>
+        <a class="page-number" th:href="${tag.status.permalink}" th:classappend="${1 eq pageIndex} ? 'current'">1</a>
+        <!-- 当前页面小于等于4 -->
+        <a class="page-number"
+           th:classappend="${index eq pageIndex} ? 'current'" th:each="index : ${#numbers.sequence(2,5)}"
+           th:if="${pageIndex le 4}"
+           th:href="@{${tag.status.permalink+'/page/' + index}}" th:text="${index}">
+        </a>
+        <span class="space" th:if="${pageIndex le 4}">…</span>
+        <!-- 最后一页与当前页面之差小于等于3 -->
+        <span class="space" th:if="${totalPages - pageIndex le 3}">…</span>
+        <a class="page-number"
+           th:classappend="${index eq pageIndex} ? 'current'"
+           th:each="index : ${#numbers.sequence(totalPages - 4, totalPages - 1)}"
+           th:if="${totalPages - pageIndex le 3}"
+           th:href="@{${tag.status.permalink+'/page/' + index}}" th:text="${index}">
+        </a>
+        <!-- 最后一页与当前页面之差大于3 且当前页面大于4 -->
+        <span class="space" th:if="${(pageIndex gt 4) && (totalPages - pageIndex gt 3)}">…</span>
+        <a class="page-number"
+           th:each="index : ${#numbers.sequence(pageIndex - 1,pageIndex + 1)}"
+           th:if="${(pageIndex gt 4) && (totalPages - pageIndex gt 3)}"
+           th:href="@{${tag.status.permalink+'/page/' + index}}" th:text="${index}">
+        </a>
+        <span class="space" th:if="${(pageIndex gt 4) && (totalPages - pageIndex gt 3)}">…</span>
+        <!-- 尾页 -->
+        <a class="page-number"
+           th:classappend="${index eq pageIndex} ? 'current'"
+           th:text="${totalPages}"
+           th:href="@{${tag.status.permalink+'/page/' + totalPages}}">
+        </a>
+        <a class="extend next"
+           th:href="@{${posts.nextUrl}}" th:if="${posts.hasNext()}">
+          <i class="iconfont icon-youbian"></i>
+        </a>
+      </div>
+
+    </nav>
+  </th:block>
+  <th:block th:if="${htmlType == 'archive'}" th:fragment="archive">
+    <nav id="pagination" th:if="${archives.hasPrevious() || archives.hasNext()}"
+         th:with="totalPages = ${archives.totalPages}, pageIndex = ${archives.page}"
+         class="mt-3 mt-md-4">
+      <div class="pagination" th:if="${(totalPages le 7) && (totalPages gt 0)}">
+
+        <!-- 上一页 -->
+        <a class="extend prev" rel="prev" th:href="@{${archives.prevUrl}}" th:if="${archives.hasPrevious()}">
+          <i class="iconfont icon-zuobian"></i>
+        </a>
+        <a class="page-number"
+           th:classappend="${index eq pageIndex} ? 'current'"
+           th:each="index : ${#numbers.sequence(1, totalPages)}"
+           th:href="@{/archives/page/} + ${index}"
+           th:text="${index}">
+        </a>
+        <!-- 下一页 -->
+        <a class="extend next"
+           th:href="@{${archives.nextUrl}}" th:if="${archives.hasNext()}">
+          <!--                                        <div class="pagination_tips_next">下页</div>-->
+          <i class="iconfont icon-youbian"></i>
+        </a>
+      </div>
+      <!-- 页面大于 7 -->
+      <div class="pagination" th:if="${totalPages gt 7}">
+        <a class="extend prev" th:href="@{${posts.prevUrl}}" th:if="${posts.hasPrevious()}">
+          <i class="iconfont icon-zuobian"></i>
+        </a>
+        <a class="page-number" th:href="${tag.status.permalink}" th:classappend="${1 eq pageIndex} ? 'current'">1</a>
+        <!-- 当前页面小于等于4 -->
+        <a class="page-number"
+           th:classappend="${index eq pageIndex} ? 'current'" th:each="index : ${#numbers.sequence(2,5)}"
+           th:if="${pageIndex le 4}"
+           th:href="@{/archives/page/} + ${index}" th:text="${index}">
+        </a>
+        <span class="space" th:if="${pageIndex le 4}">…</span>
+        <!-- 最后一页与当前页面之差小于等于3 -->
+        <span class="space" th:if="${totalPages - pageIndex le 3}">…</span>
+        <a class="page-number"
+           th:classappend="${index eq pageIndex} ? 'current'"
+           th:each="index : ${#numbers.sequence(totalPages - 4, totalPages - 1)}"
+           th:if="${totalPages - pageIndex le 3}"
+           th:href="@{/archives/page/} + ${index}" th:text="${index}">
+        </a>
+        <!-- 最后一页与当前页面之差大于3 且当前页面大于4 -->
+        <span class="space" th:if="${(pageIndex gt 4) && (totalPages - pageIndex gt 3)}">…</span>
+        <a class="page-number"
+           th:each="index : ${#numbers.sequence(pageIndex - 1,pageIndex + 1)}"
+           th:if="${(pageIndex gt 4) && (totalPages - pageIndex gt 3)}"
+           th:href="@{${tag.status.permalink+'/page/' + index}}" th:text="${index}">
+        </a>
+        <span class="space" th:if="${(pageIndex gt 4) && (totalPages - pageIndex gt 3)}">…</span>
+        <!-- 尾页 -->
+        <a class="page-number"
+           th:classappend="${index eq pageIndex} ? 'current'"
+           th:text="${totalPages}"
+           th:href="@{/archives/page/} + ${totalPages}">
+        </a>
+        <a class="extend next"
+           th:href="@{${posts.nextUrl}}" th:if="${archives.hasNext()}">
+          <i class="iconfont icon-youbian"></i>
+        </a>
+      </div>
+
+    </nav>
+  </th:block>
+  <th:block th:if="${htmlType == 'moments'}" th:fragment="moments">
+    <nav id="pagination" th:if="${moments.hasPrevious() || moments.hasNext()}"
+         th:with="totalPages = ${moments.totalPages}, pageIndex = ${moments.page}"
+         class="mt-3 mt-md-4">
+      <div class="pagination" th:if="${(totalPages le 7) && (totalPages gt 0)}">
+
+        <!-- 上一页 -->
+        <a class="extend prev" rel="prev" th:href="@{${moments.prevUrl}}" th:if="${moments.hasPrevious()}">
+          <i class="iconfont icon-zuobian"></i>
+        </a>
+        <a class="page-number"
+           th:classappend="${index eq pageIndex} ? 'current'"
+           th:each="index : ${#numbers.sequence(1, totalPages)}"
+           th:href="@{/moments/page/} + ${index}"
+           th:text="${index}">
+        </a>
+        <!-- 下一页 -->
+        <a class="extend next"
+           th:href="@{${moments.nextUrl}}" th:if="${moments.hasNext()}">
+          <!--                                        <div class="pagination_tips_next">下页</div>-->
+          <i class="iconfont icon-youbian"></i>
+        </a>
+      </div>
+      <!-- 页面大于 7 -->
+      <div class="pagination" th:if="${totalPages gt 7}">
+        <a class="extend prev" th:href="@{${moments.prevUrl}}" th:if="${moments.hasPrevious()}">
+          <i class="iconfont icon-zuobian"></i>
+        </a>
+        <a class="page-number" th:href="${moments.status.permalink}" th:classappend="${1 eq pageIndex} ? 'current'">1</a>
+        <!-- 当前页面小于等于4 -->
+        <a class="page-number"
+           th:classappend="${index eq pageIndex} ? 'current'" th:each="index : ${#numbers.sequence(2,5)}"
+           th:if="${pageIndex le 4}"
+           th:href="@{/moments/page/} + ${index}" th:text="${index}">
+        </a>
+        <span class="space" th:if="${pageIndex le 4}">…</span>
+        <!-- 最后一页与当前页面之差小于等于3 -->
+        <span class="space" th:if="${totalPages - pageIndex le 3}">…</span>
+        <a class="page-number"
+           th:classappend="${index eq pageIndex} ? 'current'"
+           th:each="index : ${#numbers.sequence(totalPages - 4, totalPages - 1)}"
+           th:if="${totalPages - pageIndex le 3}"
+           th:href="@{/moments/page/} + ${index}" th:text="${index}">
+        </a>
+        <!-- 最后一页与当前页面之差大于3 且当前页面大于4 -->
+        <span class="space" th:if="${(pageIndex gt 4) && (totalPages - pageIndex gt 3)}">…</span>
+        <a class="page-number"
+           th:each="index : ${#numbers.sequence(pageIndex - 1,pageIndex + 1)}"
+           th:if="${(pageIndex gt 4) && (totalPages - pageIndex gt 3)}"
+           th:href="@{${moments.status.permalink+'/page/' + index}}" th:text="${index}">
+        </a>
+        <span class="space" th:if="${(pageIndex gt 4) && (totalPages - pageIndex gt 3)}">…</span>
+        <!-- 尾页 -->
+        <a class="page-number"
+           th:classappend="${index eq pageIndex} ? 'current'"
+           th:text="${totalPages}"
+           th:href="@{/moments/page/} + ${totalPages}">
+        </a>
+        <a class="extend next"
+           th:href="@{${posts.nextUrl}}" th:if="${archives.hasNext()}">
+          <i class="iconfont icon-youbian"></i>
+        </a>
+      </div>
+
+    </nav>
+  </th:block>
+</th:block>
+
+</html>

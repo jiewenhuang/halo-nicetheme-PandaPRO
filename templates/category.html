@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{modules/layout :: html(title = ${category.spec.displayName}+ ' - ' + ${site.title},htmlType = index,header = null,leftSidebar = true,content = ~{::content}, head = null, footer = null)}"
+      th:replace="~{modules/layout :: html(title = ${category.spec.displayName}+ ' - ' + ${site.title},htmlType = category,header = null,leftSidebar = true,content = ~{::content}, head = null, footer = null)}"
 >
   <th:block th:fragment="content">
     <main class="site-main" style="transform: none;">
@@ -70,6 +70,7 @@
                 </div>
 
             </div>
+            <th:block th:replace="~{modules/widgets/pagination :: pagination}" />
 
           </div>
           <th:block th:replace="~{modules/right-widget :: right-widget}" />

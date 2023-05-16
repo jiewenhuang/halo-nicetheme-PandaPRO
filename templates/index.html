@@ -12,9 +12,6 @@
               <div class="swiper swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden">
                 <div class="swiper-wrapper" style="transition-duration: 0ms; transform: translate3d(-932px, 0px, 0px);" id="swiper-wrapper-f54bf3257fed3bbb" aria-live="polite">
                   <div class="swiper-slide rounded-2 swiper-slide-duplicate swiper-slide-prev swiper-slide-duplicate-next" data-swiper-slide-index="1" style="width: 902px; margin-right: 30px;" role="group" aria-label="2 / 2">
-                    <div class="media media-3x1">
-                      <a target="_blank" class="media-content" href="#" style="background-image: url(https://pandapro.halo.nicetheme.xyz/upload/img00023.jpg)"></a>
-                    </div>
                   </div>
                   <th:block th:if="${theme.config.index.banner != null}">
                     <th:block th:each="banner : ${theme.config.index.banner}">
@@ -134,6 +131,7 @@
                 </div>
               </div>
             </div>
+            <th:block th:replace="~{modules/widgets/pagination :: pagination}" />
           </div>
           <th:block th:replace="~{modules/right-widget :: right-widget}" />
         </div>
